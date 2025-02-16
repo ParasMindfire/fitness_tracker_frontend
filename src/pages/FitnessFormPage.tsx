@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useFitness } from "../contexts/FitnessContext";
+import { showToast } from "../helpers/toastHelper";
+import { useNavigate } from "react-router-dom";
 
-const FitnessForm = () => {
+const FitnessFormPage = () => {
   const { addFitnessGoal, editFitnessGoal, id, setId, formData, setFormData, fetchFitnessGoals } = useFitness();
-
+    const navigate=useNavigate();
   const [localFormData, setLocalFormData] = useState({
     goal_type: "",
     target_value: 0,
@@ -41,8 +43,10 @@ const FitnessForm = () => {
     if (id !== null) {
       await editFitnessGoal({ goal_id: id, ...formattedGoal });
       setId(null);
+      showToast("Goal Edited Succesfully","success");
     } else {
       await addFitnessGoal(formattedGoal);
+      showToast("Goal Added Succesfully","success");
     }
 
     setFormData(null);
@@ -54,6 +58,8 @@ const FitnessForm = () => {
       end_date: "",
       status: "pending",
     });
+
+    navigate('/fitnessViews');
 
     fetchFitnessGoals();
   };
@@ -112,4 +118,4 @@ const FitnessForm = () => {
   );
 };
 
-export default FitnessForm;
+export default FitnessFormPage;

@@ -1,8 +1,13 @@
 import { useWorkout } from "../contexts/WorkoutContext";
 import { createWorkout, updateWorkout } from "../services/WorkoutAPI";
 import { useEffect, useState } from "react";
+import { showToast } from "../helpers/toastHelper";
+import { useNavigate } from "react-router-dom";
 
-export const WorkoutForm = () => {
+
+export const WorkoutFormPage = () => {
+    const navigate=useNavigate();
+
   const { formData, setFormData, fetchWorkouts,id } = useWorkout();
   const [localFormData, setLocalFormData] = useState({
     exercise_type: "",
@@ -40,6 +45,7 @@ export const WorkoutForm = () => {
         duration: Number(localFormData.duration),
         calories_burned: Number(localFormData.calories_burned),
       });
+      showToast("Workout Updated Succesully","success");
     } else {
       // Create new workout
       await createWorkout(token, {
@@ -47,6 +53,7 @@ export const WorkoutForm = () => {
         duration: Number(localFormData.duration),
         calories_burned: Number(localFormData.calories_burned),
       });
+      showToast("Workout Added Succesully","success");
     }
 
     setFormData(null);
@@ -56,6 +63,9 @@ export const WorkoutForm = () => {
       calories_burned: "",
       workout_date: "",
     });
+
+    navigate('/workoutViews')
+    
     fetchWorkouts();
   };
 

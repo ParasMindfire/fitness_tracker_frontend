@@ -3,6 +3,7 @@ import { signup } from "../services/UserAPI";
 // import { useUserContext } from "../contexts/UserContext";
 import { User } from "../interfaces/types";
 import { useNavigate } from "react-router-dom";
+import { showToast } from "../helpers/toastHelper";
 
 const Signup = () => {
   const [form, setForm] = useState<User>({
@@ -29,12 +30,14 @@ const Signup = () => {
       const response:any= await signup(form);
       if (response.status==200) {
         console.log("Signup data ",response);
+        showToast("Signup Successful","success");
         // setUser(response.user);
         navigate("/login");
       } else {
         setError(response.message || "Signup failed!");
       }
     } catch (error) {
+      showToast("Signup Failed","error");
       setError("Signup failed. Please try again!");
     }
   };

@@ -1,16 +1,13 @@
 import React from "react";
-import { WorkoutForm } from "../components/WorkoutForm";
 import { WorkoutCard } from "../components/WorkoutCard";
 import { useWorkout } from "../contexts/WorkoutContext";
 
-const WorkoutDashboard: React.FC = () => {
+const WorkoutViews: React.FC = () => {
   const { workouts, loading, error } = useWorkout();
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md w-full">
       <h2 className="text-2xl font-bold text-gray-800 mb-4">Your Workouts</h2>
-
-      <WorkoutForm />
 
       {loading && <p className="text-gray-500">Loading workouts...</p>}
       {error && <p className="text-red-500">{error}</p>}
@@ -26,4 +23,4 @@ const WorkoutDashboard: React.FC = () => {
   );
 };
 
-export default WorkoutDashboard;
+export default WorkoutViews;

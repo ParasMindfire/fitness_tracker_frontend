@@ -1,6 +1,8 @@
 import { Workout } from "../interfaces/workoutInterface";
 import { deleteWorkout } from "../services/WorkoutAPI";
 import { useWorkout } from "../contexts/WorkoutContext";
+import { showToast } from "../helpers/toastHelper";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   workout: Workout;
@@ -10,14 +12,18 @@ export const WorkoutCard = ({ workout }: Props) => {
   const { fetchWorkouts, setFormData ,setId} = useWorkout();
   const token = localStorage.getItem("token");
 
+  const navigate=useNavigate();
+
   const handleDelete = async () => {
     if (!token) return;
     await deleteWorkout(token, workout.workout_id);
+    showToast("Workout Deleted Successfully","success");
     fetchWorkouts();
   };
 
   const handleEdit = (id:any) => {
     setFormData(workout);
+    navigate('/workoutFormPage')
     setId(id);
   };
 

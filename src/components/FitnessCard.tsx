@@ -1,5 +1,6 @@
 import { FitnessGoal } from "../contexts/FitnessContext";
 import { useFitness } from "../contexts/FitnessContext";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   goal: FitnessGoal;
@@ -8,9 +9,12 @@ interface Props {
 const FitnessCard = ({ goal }: Props) => {
   const {removeFitnessGoal,setId,setFormData } = useFitness();
 
+  const navigate=useNavigate();
+
   const handleEdit = (id:any) => {
     console.log("edit id",id);
     setFormData(goal);
+    navigate('/fitnessFormPage');
     setId(id);
   };
 

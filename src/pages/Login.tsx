@@ -3,6 +3,7 @@ import { login } from '../services/UserAPI';
 import { useUserContext } from '../contexts/UserContext';
 import { LoginData } from '../interfaces/types';
 import { useNavigate } from 'react-router-dom';
+import { showToast } from '../helpers/toastHelper';
 
 const Login = () => {
   const [form, setForm] = useState<LoginData>({ email: '', password: '' });
@@ -23,9 +24,10 @@ const Login = () => {
         console.log("login data ",response);
         setUser(response.user);
         localStorage.setItem("token",response.token);
+        showToast("Login Successful","success");
         navigate("/");
       } else {
-        alert(response.message || "Login failed!");
+        showToast("Login Failed","error");
       }
     } catch (error) {
       setError("Login Failed !!")

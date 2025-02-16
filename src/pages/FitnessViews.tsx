@@ -1,16 +1,12 @@
 import { useFitness } from "../contexts/FitnessContext";
 import FitnessCard from "../components/FitnessCard";
-import FitnessForm from "../components/FitnessForm";
 
-const FitnessDashboard = () => {
+const FitnessViews = () => {
   const { fitnessGoals, loading, error } = useFitness();
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md w-full">
       <h2 className="text-2xl font-bold text-gray-800 mb-4">Fitness Goals</h2>
-
-      {/* Form to Add/Edit Goals */}
-      <FitnessForm />
 
       {/* Loading & Error Messages */}
       {loading && <p className="text-gray-500">Loading fitness goals...</p>}
@@ -28,4 +24,4 @@ const FitnessDashboard = () => {
   );
 };
 
-export default FitnessDashboard;
+export default FitnessViews;

@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { getAllFitnessGoals, createFitnessGoal, updateFitnessGoal, deleteFitnessGoal, getSingleFitnessGoal } from "../services/FitnessAPI";
+import { showToast } from "../helpers/toastHelper";
 
 export interface FitnessGoal {
   goal_id: number;
@@ -80,6 +81,7 @@ export const FitnessProvider = ({ children }: { children: ReactNode }) => {
   const removeFitnessGoal = async (goal_id: number) => {
     try {
       await deleteFitnessGoal(goal_id);
+      showToast("Goal Deleted Successfully","success");
       fetchFitnessGoals();
     } catch (error) {
       console.error("Error deleting fitness goal:", error);
