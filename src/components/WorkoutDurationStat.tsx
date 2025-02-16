@@ -42,7 +42,6 @@ export const WorkoutDurationStats = () => {
   
         return (
           <>
-            {/* Weekly Workout Progress */}
             <div className="mt-8">
               <h3 className="text-lg font-semibold text-center text-blue-600">Weekly Progress</h3>
               <p className="text-sm text-center text-gray-500">
@@ -60,7 +59,6 @@ export const WorkoutDurationStats = () => {
               </ResponsiveContainer>
             </div>
   
-            {/* Monthly Workout Progress */}
             <div className="mt-8">
               <h3 className="text-lg font-semibold text-center text-green-600">Monthly Progress</h3>
               <p className="text-sm text-center text-gray-500">
@@ -78,7 +76,6 @@ export const WorkoutDurationStats = () => {
               </ResponsiveContainer>
             </div>
   
-            {/* Yearly Workout Progress */}
             <div className="mt-8">
               <h3 className="text-lg font-semibold text-center text-yellow-600">Yearly Progress</h3>
               <p className="text-sm text-center text-gray-500">

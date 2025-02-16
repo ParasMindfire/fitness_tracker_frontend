@@ -30,7 +30,6 @@ const Landing: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            {/* Workout Section */}
             <div className="bg-white p-6 rounded-lg shadow-md text-center">
               <h3 className="text-xl font-semibold text-blue-600">Workout</h3>
               <p className="text-gray-500 mt-1">Manage your workouts</p>
@@ -50,7 +49,6 @@ const Landing: React.FC = () => {
               </div>
             </div>
 
-            {/* Fitness Section */}
             <div className="bg-white p-6 rounded-lg shadow-md text-center">
               <h3 className="text-xl font-semibold text-green-600">Fitness</h3>
               <p className="text-gray-500 mt-1">Set & track your fitness goals</p>
@@ -70,7 +68,6 @@ const Landing: React.FC = () => {
               </div>
             </div>
 
-            {/* Stats Section */}
             <div className="bg-white p-6 rounded-lg shadow-md text-center">
               <h3 className="text-xl font-semibold text-red-600">Stats</h3>
               <p className="text-gray-500 mt-1">Analyze your progress</p>

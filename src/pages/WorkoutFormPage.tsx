@@ -4,11 +4,10 @@ import { useEffect, useState } from "react";
 import { showToast } from "../helpers/toastHelper";
 import { useNavigate } from "react-router-dom";
 
-
 export const WorkoutFormPage = () => {
-    const navigate=useNavigate();
-
-  const { formData, setFormData, fetchWorkouts,id } = useWorkout();
+  const navigate = useNavigate();
+  const { formData, setFormData, fetchWorkouts, id } = useWorkout();
+  
   const [localFormData, setLocalFormData] = useState({
     exercise_type: "",
     duration: "",
@@ -38,22 +37,20 @@ export const WorkoutFormPage = () => {
     if (!token) return;
 
     if (formData) {
-      // Update workout
       await updateWorkout(token, {
         ...localFormData,
-        workout_id:id,
+        workout_id: id,
         duration: Number(localFormData.duration),
         calories_burned: Number(localFormData.calories_burned),
       });
-      showToast("Workout Updated Succesully","success");
+      showToast("Workout Updated Successfully", "success");
     } else {
-      // Create new workout
       await createWorkout(token, {
         ...localFormData,
         duration: Number(localFormData.duration),
         calories_burned: Number(localFormData.calories_burned),
       });
-      showToast("Workout Added Succesully","success");
+      showToast("Workout Added Successfully", "success");
     }
 
     setFormData(null);
@@ -64,47 +61,72 @@ export const WorkoutFormPage = () => {
       workout_date: "",
     });
 
-    navigate('/workoutViews')
-    
+    navigate('/workoutViews');
     fetchWorkouts();
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded-lg shadow-lg">
-      <input
-        type="text"
-        name="exercise_type"
-        placeholder="Exercise Type"
-        value={localFormData.exercise_type}
-        onChange={handleChange}
-        className="w-full p-2 border rounded mb-2"
-      />
-      <input
-        type="number"
-        name="duration"
-        placeholder="Duration (mins)"
-        value={localFormData.duration}
-        onChange={handleChange}
-        className="w-full p-2 border rounded mb-2"
-      />
-      <input
-        type="number"
-        placeholder="Calories Burned"
-        name="calories_burned"
-        value={localFormData.calories_burned}
-        onChange={handleChange}
-        className="w-full p-2 border rounded mb-2"
-      />
-      <input
-        type="date"
-        name="workout_date"
-        value={localFormData.workout_date}
-        onChange={handleChange}
-        className="w-full p-2 border rounded mb-2"
-      />
-      <button className="bg-blue-500 text-white px-3 py-2 rounded w-full cursor-pointer">
-        {formData ? `Update Workout` : `Add Workout`}
-      </button>
-    </form>
+    <div className="mt-64">
+      <form 
+        onSubmit={handleSubmit} 
+        className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg border border-gray-200"
+      >
+        <h2 className="text-xl font-semibold text-gray-700 text-center mb-4">
+          {formData ? "Edit Workout" : "Add Workout"}
+        </h2>
+
+        <div className="space-y-3">
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">Exercise Type</label>
+            <input
+              type="text"
+              name="exercise_type"
+              value={localFormData.exercise_type}
+              onChange={handleChange}
+              className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300 focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">Duration (mins)</label>
+            <input
+              type="number"
+              name="duration"
+              value={localFormData.duration}
+              onChange={handleChange}
+              className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300 focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">Calories Burned</label>
+            <input
+              type="number"
+              name="calories_burned"
+              value={localFormData.calories_burned}
+              onChange={handleChange}
+              className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300 focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">Workout Date</label>
+            <input
+              type="date"
+              name="workout_date"
+              value={localFormData.workout_date}
+              onChange={handleChange}
+              className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-300 focus:outline-none"
+            />
+          </div>
+        </div>
+
+        <button 
+          className="mt-5 w-full bg-blue-500 hover:bg-blue-600 text-white text-lg font-medium py-3 rounded-md transition-all"
+        >
+          {formData ? "Update Workout" : "Add Workout"}
+        </button>
+      </form>
+    </div>
   );
 };

@@ -35,7 +35,6 @@ export const FitnessProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // New state for editing
   const [id, setId] = useState<number | null>(null);
   const [formData, setFormData] = useState<Omit<FitnessGoal, "goal_id" | "user_id" | "status">>({
     goal_type: "weight_loss",

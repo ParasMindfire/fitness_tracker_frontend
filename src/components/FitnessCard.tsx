@@ -7,39 +7,62 @@ interface Props {
 }
 
 const FitnessCard = ({ goal }: Props) => {
-  const {removeFitnessGoal,setId,setFormData } = useFitness();
+  const { removeFitnessGoal, setId, setFormData } = useFitness();
+  const navigate = useNavigate();
 
-  const navigate=useNavigate();
-
-  const handleEdit = (id:any) => {
-    console.log("edit id",id);
+  const handleEdit = (id: any) => {
     setFormData(goal);
-    navigate('/fitnessFormPage');
+    navigate("/fitnessFormPage");
     setId(id);
   };
 
   return (
-    <div className="p-4 border rounded-lg shadow-lg">
-      <h2 className="text-lg font-semibold">{goal.goal_type.replace("_", " ").toUpperCase()}</h2>
-      <p>Target: {goal.target_value}</p>
-      <p>Current Progress: {goal.current_progress}</p>
-      <p>Start Date: {new Date(goal.start_date).toLocaleDateString()}</p>
-      {goal.end_date && <p>End Date: {new Date(goal.end_date).toLocaleDateString()}</p>}
-      <p>Status: {goal.status.toUpperCase()}</p>
+    <div className="relative bg-white shadow-md rounded-xl p-4 border border-gray-200 w-96 transition-transform hover:scale-105 hover:shadow-lg">
+      <h2 className="text-lg font-bold text-gray-700 uppercase truncate">
+        {goal.goal_type.replace("_", " ")}
+      </h2>
 
-      {/* Edit Button */}
-      <button onClick={()=>handleEdit(goal.goal_id)} className="cursor-pointer mt-2 bg-green-500 text-white px-3 py-1 rounded">
-            Edit
-      </button>
+      <div className="text-gray-600 text-sm mt-2 space-y-1">
+        <p>
+          <span className="font-semibold">Target:</span> {goal.target_value}
+        </p>
+        <p>
+          <span className="font-semibold">Progress:</span> {goal.current_progress}
+        </p>
+        <p>
+          <span className="font-semibold">Start:</span> {new Date(goal.start_date).toLocaleDateString()}
+        </p>
+        {goal.end_date && (
+          <p>
+            <span className="font-semibold">End:</span> {new Date(goal.end_date).toLocaleDateString()}
+          </p>
+        )}
+      </div>
 
-
-      {/* Delete Button */}
-      <button
-        onClick={() => removeFitnessGoal(goal.goal_id)}
-        className="cursor-pointer mt-2 ml-5 bg-red-500 text-white px-3 py-1 rounded"
+      <span
+        className={`absolute top-3 right-3 text-xs font-semibold px-2 py-1 rounded-full ${
+          goal.status === "complete"
+            ? "bg-green-100 text-green-600"
+            : "bg-yellow-100 text-yellow-600"
+        }`}
       >
-        Delete
-      </button>
+        {goal.status.toUpperCase()}
+      </span>
+      
+      <div className="flex justify-between mt-4">
+        <button
+          onClick={() => handleEdit(goal.goal_id)}
+          className="bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium px-3 py-1 rounded-lg transition-all"
+        >
+          Edit
+        </button>
+        <button
+          onClick={() => removeFitnessGoal(goal.goal_id)}
+          className="bg-red-500 hover:bg-red-600 text-white text-xs font-medium px-3 py-1 rounded-lg transition-all"
+        >
+          Delete
+        </button>
+      </div>
     </div>
   );
 };

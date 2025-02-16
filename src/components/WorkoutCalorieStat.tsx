@@ -42,7 +42,6 @@ export const WorkoutCaloriesStats = () => {
   
         return (
           <>
-            {/* Weekly Calories Burned Progress */}
             <div className="mt-8">
               <h3 className="text-lg font-semibold text-center text-red-600">Weekly Calories Burned</h3>
               <p className="text-sm text-center text-gray-500">
@@ -60,7 +59,6 @@ export const WorkoutCaloriesStats = () => {
               </ResponsiveContainer>
             </div>
   
-            {/* Monthly Calories Burned Progress */}
             <div className="mt-8">
               <h3 className="text-lg font-semibold text-center text-purple-600">Monthly Calories Burned</h3>
               <p className="text-sm text-center text-gray-500">
@@ -77,8 +75,7 @@ export const WorkoutCaloriesStats = () => {
                 </LineChart>
               </ResponsiveContainer>
             </div>
-  
-            {/* Yearly Calories Burned Progress */}
+  =
             <div className="mt-8">
               <h3 className="text-lg font-semibold text-center text-orange-600">Yearly Calories Burned</h3>
               <p className="text-sm text-center text-gray-500">
