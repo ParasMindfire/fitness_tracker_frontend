@@ -5,15 +5,19 @@ import { useNavigate } from "react-router-dom";
 
 interface Props {
   goal: FitnessGoal;
+  onDelete: (goalId: any) => void;
 }
 
-const FitnessCard = ({ goal }: Props) => {
-  const { removeFitnessGoal, setId, setFormData } = useFitness();
+const FitnessCard = ({ goal, onDelete }: Props) => {
+  const { setId, setFormData } = useFitness();
   const navigate = useNavigate();
 
   const [showProgress, setShowProgress] = useState(false);
-
-  const percentage = (goal.current_progress / goal.target_value) * 100;
+  
+  let percentage = (goal.current_progress / goal.target_value) * 100;
+  if (percentage > 100) {
+    percentage = 100;
+  }
 
   const handleEdit = (id: any) => {
     setFormData(goal);
@@ -22,7 +26,7 @@ const FitnessCard = ({ goal }: Props) => {
   };
 
   const handleTrackFitness = () => {
-    setShowProgress(!showProgress); 
+    setShowProgress(!showProgress);
   };
 
   return (
@@ -86,7 +90,7 @@ const FitnessCard = ({ goal }: Props) => {
           Edit
         </button>
         <button
-          onClick={() => removeFitnessGoal(goal.goal_id)}
+          onClick={() => onDelete(goal.goal_id)}
           className="bg-red-500 hover:bg-red-600 text-white text-xs font-medium px-3 py-1 rounded-lg transition-all"
         >
           Delete

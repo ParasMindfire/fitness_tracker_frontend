@@ -1,24 +1,16 @@
 import { Workout } from "../interfaces/workoutInterface";
-import { deleteWorkout } from "../services/WorkoutAPI";
 import { useWorkout } from "../contexts/WorkoutContext";
-import { showToast } from "../helpers/toastHelper";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
   workout: Workout;
+  onDelete: (goalId: any) => void;
 }
 
-export const WorkoutCard = ({ workout }: Props) => {
-  const { fetchWorkouts, setFormData, setId } = useWorkout();
-  const token = localStorage.getItem("token");
+export const WorkoutCard = ({ workout,onDelete }: Props) => {
+  const { setFormData, setId } = useWorkout();
   const navigate = useNavigate();
 
-  const handleDelete = async () => {
-    if (!token) return;
-    await deleteWorkout(token, workout.workout_id);
-    showToast("Workout Deleted Successfully", "success");
-    fetchWorkouts();
-  };
 
   const handleEdit = (id: any) => {
     setFormData(workout);
@@ -44,7 +36,7 @@ export const WorkoutCard = ({ workout }: Props) => {
         </button>
 
         <button
-          onClick={handleDelete}
+          onClick={()=>onDelete(workout.workout_id)}
           className="bg-red-500 text-white text-sm font-medium px-4 py-2 rounded-lg transition-all hover:bg-red-600"
         >
           Delete

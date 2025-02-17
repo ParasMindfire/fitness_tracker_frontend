@@ -4,7 +4,7 @@ import React, { useState } from "react";
 const FitnessTracker: React.FC = () => {
   
   const goal = 10000; 
-  const [progress, setProgress] = useState(6000); 
+  const [progress] = useState(6000); 
 
   const percentage = (progress / goal) * 100;
 

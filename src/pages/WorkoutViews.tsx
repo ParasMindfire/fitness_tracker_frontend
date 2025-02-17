@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { WorkoutCard } from "../components/WorkoutCard";
 import { useWorkout } from "../contexts/WorkoutContext";
+import { deleteWorkout } from "../services/WorkoutAPI";
+import { showToast } from "../helpers/toastHelper";
 
 const WorkoutViews: React.FC = () => {
-  const { workouts, loading, error } = useWorkout();
+  const { workouts, loading, error,fetchWorkouts } = useWorkout();
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const workoutsPerPage = 4;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [workoutId, setworkoutId] = useState(null);
+
   
   const sortedWorkouts = [...workouts].sort((a, b) => {
     const dateA = new Date(a.workout_date).getTime();
@@ -33,6 +38,21 @@ const WorkoutViews: React.FC = () => {
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
   };
 
+  const handleDeleteClick = (workoutId:any) => {
+    setworkoutId(workoutId);
+    setIsModalOpen(true);
+  };
+
+  const confirmDelete = async() => {
+    const token:any=localStorage.getItem("token");
+    if (workoutId){
+          await deleteWorkout(token,workoutId);
+          showToast("Workout Deleted Successfully", "success");
+          fetchWorkouts();
+          setIsModalOpen(false);
+        }
+    }
+
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100 p-8">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-6xl text-center">
@@ -54,7 +74,7 @@ const WorkoutViews: React.FC = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 justify-center items-center">
               {currentWorkouts.map((workout) => (
-                <WorkoutCard key={workout.workout_id} workout={workout} />
+                <WorkoutCard key={workout.workout_id} workout={workout} onDelete={handleDeleteClick}/>
               ))}
             </div>
 
@@ -83,7 +103,28 @@ const WorkoutViews: React.FC = () => {
                 >
                   Next
                 </button>
+
+
+                {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 className="text-lg font-bold">Confirm Delete</h2>
+            <p>Are you sure you want to delete this goal?</p>
+            <div className="flex justify-end mt-4">
+              <button onClick={() => setIsModalOpen(false)} className="bg-gray-300 px-4 py-2 rounded mr-2">
+                Cancel
+              </button>
+              <button onClick={confirmDelete} className="bg-red-500 text-white px-4 py-2 rounded">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
               </div>
+
+
+
             )}
           </>
         ) : (
