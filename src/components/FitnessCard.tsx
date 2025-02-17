@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FitnessGoal } from "../contexts/FitnessContext";
 import { useFitness } from "../contexts/FitnessContext";
 import { useNavigate } from "react-router-dom";
