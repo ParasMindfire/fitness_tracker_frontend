@@ -5,20 +5,32 @@ import { useWorkout } from "../contexts/WorkoutContext";
 const WorkoutViews: React.FC = () => {
   const { workouts, loading, error } = useWorkout();
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const workoutsPerPage = 4;
-
-  const totalPages = Math.ceil(workouts.length / workoutsPerPage);
-
+  
+  const sortedWorkouts = [...workouts].sort((a, b) => {
+    const dateA = new Date(a.workout_date).getTime();
+    const dateB = new Date(b.workout_date).getTime();
+    
+    return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+  });
+  
+  const totalPages = Math.ceil(sortedWorkouts.length / workoutsPerPage);
+  
   const indexOfLastWorkout = currentPage * workoutsPerPage;
   const indexOfFirstWorkout = indexOfLastWorkout - workoutsPerPage;
-  const currentWorkouts = workouts.slice(indexOfFirstWorkout, indexOfLastWorkout);
-
+  const currentWorkouts = sortedWorkouts.slice(indexOfFirstWorkout, indexOfLastWorkout);
+  
   const nextPage = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
-
+  
   const prevPage = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  const toggleSortOrder = () => {
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
   };
 
   return (
@@ -31,6 +43,15 @@ const WorkoutViews: React.FC = () => {
 
         {workouts.length > 0 ? (
           <>
+            <div className="flex justify-end mb-4">
+              <button
+                onClick={toggleSortOrder}
+                className="bg-blue-500 text-white font-medium px-4 py-2 rounded-lg transition-all hover:bg-blue-600"
+              >
+                Sort by Date ({sortOrder === 'asc' ? 'Ascending' : 'Descending'})
+              </button>
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 justify-center items-center">
               {currentWorkouts.map((workout) => (
                 <WorkoutCard key={workout.workout_id} workout={workout} />

@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { FitnessGoal } from "../contexts/FitnessContext";
 import { useFitness } from "../contexts/FitnessContext";
 import { useNavigate } from "react-router-dom";
@@ -10,10 +11,18 @@ const FitnessCard = ({ goal }: Props) => {
   const { removeFitnessGoal, setId, setFormData } = useFitness();
   const navigate = useNavigate();
 
+  const [showProgress, setShowProgress] = useState(false);
+
+  const percentage = (goal.current_progress / goal.target_value) * 100;
+
   const handleEdit = (id: any) => {
     setFormData(goal);
     navigate("/fitnessFormPage");
     setId(id);
+  };
+
+  const handleTrackFitness = () => {
+    setShowProgress(!showProgress); 
   };
 
   return (
@@ -48,7 +57,27 @@ const FitnessCard = ({ goal }: Props) => {
       >
         {goal.status.toUpperCase()}
       </span>
-      
+
+      {showProgress && (
+        <div className="mt-4">
+          <div className="flex mb-2 items-center justify-between">
+            <span className="text-sm font-semibold inline-block py-1 px-2 uppercase rounded-full text-green-600 bg-green-100">
+              {Math.round(percentage)}% Achieved
+            </span>
+          </div>
+          <div className="relative pt-1">
+            <div className="flex">
+              <div className="w-full bg-gray-200 rounded-full h-2.5">
+                <div
+                  className="bg-green-500 h-2.5 rounded-full"
+                  style={{ width: `${percentage}%` }}
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex justify-between mt-4">
         <button
           onClick={() => handleEdit(goal.goal_id)}
@@ -61,6 +90,12 @@ const FitnessCard = ({ goal }: Props) => {
           className="bg-red-500 hover:bg-red-600 text-white text-xs font-medium px-3 py-1 rounded-lg transition-all"
         >
           Delete
+        </button>
+        <button
+          onClick={handleTrackFitness}
+          className="bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-medium px-3 py-1 rounded-lg transition-all"
+        >
+          {showProgress ? "Hide Progress" : "Track Fitness"}
         </button>
       </div>
     </div>
