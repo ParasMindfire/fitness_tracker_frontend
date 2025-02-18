@@ -1,15 +1,15 @@
 import React from "react";
 import { Routes,Route } from 'react-router-dom'
 
-import Landing from "../pages/Landing";
-import Signup from "../pages/Signup";
-import Login from "../pages/Login";
-import { WorkoutFormPage } from "../pages/WorkoutFormPage";
-import WorkoutViews from "../pages/WorkoutViews";
-import { WorkoutCaloriesStats } from "../components/WorkoutCalorieStat";
-import { WorkoutDurationStats } from "../components/WorkoutDurationStat";
-import FitnessFormPage from "../pages/FitnessFormPage";
-import FitnessViews from "../pages/FitnessViews";
+import Landing from "../pages/LandingPage/Landing";
+import Signup from "../pages/AuthPages/Signup";
+import Login from "../pages/AuthPages/Login";
+import { WorkoutFormPage } from "../pages/WrokoutPages/WorkoutFormPage";
+import WorkoutViews from "../pages/WrokoutPages/WorkoutViews";
+import { WorkoutCaloriesStats } from "../pages/StatsPages/WorkoutCalorieStat";
+import { WorkoutDurationStats } from "../pages/StatsPages/WorkoutDurationStat";
+import FitnessFormPage from "../pages/FitnessPages/FitnessFormPage";
+import FitnessViews from "../pages/FitnessPages/FitnessViews";
 
 export const Home:React.FC=()=>{
     return (

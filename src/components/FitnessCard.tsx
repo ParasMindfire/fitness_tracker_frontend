@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { FitnessGoal } from "../contexts/FitnessContext";
+// import { useState } from "react";
+import { FitnessGoal } from "../interfaces/FitnessInterface";
 import { useFitness } from "../contexts/FitnessContext";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +12,6 @@ const FitnessCard = ({ goal, onDelete }: Props) => {
   const { setId, setFormData } = useFitness();
   const navigate = useNavigate();
 
-  const [showProgress, setShowProgress] = useState(false);
   
   let percentage = (goal.current_progress / goal.target_value) * 100;
   if (percentage > 100) {
@@ -25,9 +24,6 @@ const FitnessCard = ({ goal, onDelete }: Props) => {
     setId(id);
   };
 
-  const handleTrackFitness = () => {
-    setShowProgress(!showProgress);
-  };
 
   return (
     <div className="relative bg-white shadow-md rounded-xl p-4 border border-gray-200 w-96 transition-transform hover:scale-105 hover:shadow-lg">
@@ -62,7 +58,6 @@ const FitnessCard = ({ goal, onDelete }: Props) => {
         {goal.status.toUpperCase()}
       </span>
 
-      {showProgress && (
         <div className="mt-4">
           <div className="flex mb-2 items-center justify-between">
             <span className="text-sm font-semibold inline-block py-1 px-2 uppercase rounded-full text-green-600 bg-green-100">
@@ -80,7 +75,6 @@ const FitnessCard = ({ goal, onDelete }: Props) => {
             </div>
           </div>
         </div>
-      )}
 
       <div className="flex justify-between mt-4">
         <button
@@ -94,12 +88,6 @@ const FitnessCard = ({ goal, onDelete }: Props) => {
           className="bg-red-500 hover:bg-red-600 text-white text-xs font-medium px-3 py-1 rounded-lg transition-all"
         >
           Delete
-        </button>
-        <button
-          onClick={handleTrackFitness}
-          className="bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-medium px-3 py-1 rounded-lg transition-all"
-        >
-          {showProgress ? "Hide Progress" : "Track Fitness"}
         </button>
       </div>
     </div>

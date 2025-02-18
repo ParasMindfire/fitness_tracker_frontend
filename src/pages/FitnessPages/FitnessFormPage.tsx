@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useFitness } from "../contexts/FitnessContext";
-import { showToast } from "../helpers/ToastHelper";
+import { useFitness } from "../../contexts/FitnessContext";
+import { showToast } from "../../helpers/ToastHelper";
 import { useNavigate } from "react-router-dom";
 
 const FitnessFormPage = () => {
@@ -61,6 +61,10 @@ const FitnessFormPage = () => {
 
     navigate("/fitnessViews");
     fetchFitnessGoals();
+  };
+
+  const handleBack = () => {
+    navigate("/");
   };
 
   return (
@@ -154,6 +158,14 @@ const FitnessFormPage = () => {
           <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg w-full transition">
             {id !== null ? "Update Goal" : "Add Goal"}
           </button>
+
+          <button
+        onClick={handleBack}
+        type="button"
+        className=" w-full mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 rounded-md transition duration-200"
+      >
+        Back to Dasboard
+      </button>
         </div>
       </form>
     </div>

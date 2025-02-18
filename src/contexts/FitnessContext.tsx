@@ -91,3 +91,5 @@ export const useFitness = () => {
   if (!context) throw new Error("useFitness must be used within a FitnessProvider");
   return context;
 };
+
+

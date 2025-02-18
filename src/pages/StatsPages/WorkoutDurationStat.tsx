@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useWorkout } from "../contexts/WorkoutContext";
+import { useWorkout } from "../../contexts/WorkoutContext";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import dayjs from "dayjs";
 

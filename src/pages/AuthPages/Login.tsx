@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { login } from '../services/UserAPI';
-import { useUserContext } from '../contexts/UserContext';
-import { LoginData } from '../interfaces/UserInterface';
+import { login } from '../../services/UserAPI';
+import { useUserContext } from '../../contexts/UserContext';
+import { LoginData } from '../../interfaces/UserInterface';
 import { useNavigate } from 'react-router-dom';
-import { showToast } from '../helpers/ToastHelper';
+import { showToast } from '../../helpers/ToastHelper';
 
 const Login = () => {
   const [form, setForm] = useState<LoginData>({ email: '', password: '' });
@@ -32,6 +32,10 @@ const Login = () => {
     } catch (error) {
       setError("Login Failed !!")
     }
+  };
+
+  const handleBack = () => {
+    navigate("/");
   };
 
   return (
@@ -70,6 +74,13 @@ const Login = () => {
             Login
           </button>
         </form>
+
+        <button
+          onClick={handleBack}
+          className="w-96 mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 rounded-lg transition duration-200"
+        >
+          Back to Landing
+        </button>
       </div>
     </div>
   );

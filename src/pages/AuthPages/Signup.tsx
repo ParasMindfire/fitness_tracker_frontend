@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { signup } from "../services/UserAPI";
-// import { useUserContext } from "../contexts/UserContext";
-import { User } from "../interfaces/UserInterface";
+import { signup } from "../../services/UserAPI";
+import { User } from "../../interfaces/UserInterface";
 import { useNavigate } from "react-router-dom";
-import { showToast } from "../helpers/ToastHelper";
+import { showToast } from "../../helpers/ToastHelper";
 
 const Signup = () => {
   const [form, setForm] = useState<User>({
@@ -15,7 +14,6 @@ const Signup = () => {
   });
 
   const [error, setError] = useState<string | null>(null);
-  // const { setUser } = useUserContext();
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +29,6 @@ const Signup = () => {
       if (response.status==200) {
         console.log("Signup data ",response);
         showToast("Signup Successful","success");
-        // setUser(response.user);
         navigate("/login");
       } else {
         setError(response.message || "Signup failed!");
@@ -40,6 +37,10 @@ const Signup = () => {
       showToast("Signup Failed","error");
       setError("Signup failed. Please try again!");
     }
+  };
+
+  const handleBack = () => {
+    navigate("/");
   };
 
   return (
@@ -103,6 +104,13 @@ const Signup = () => {
             Signup
           </button>
         </form>
+
+        <button
+          onClick={handleBack}
+          className="w-96 mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 rounded-lg transition duration-200"
+        >
+          Back to Landing
+        </button>
       </div>
     </div>
   );
