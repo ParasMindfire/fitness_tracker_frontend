@@ -33,3 +33,8 @@ export interface Fitness {
     formData: any;
     setFormData:any;
   }
+
+  export interface FitnessCardProps {
+    goal: FitnessGoal;
+    onDelete: (goalId: any) => void;
+  }

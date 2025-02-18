@@ -28,10 +28,13 @@ const FitnessFormPage = () => {
     }
   }, [formData]);
 
+
+  //handle form changes of fitness goal input
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setLocalFormData({ ...localFormData, [e.target.name]: e.target.value });
   };
 
+  //handles submit of goal form and navigates to viewAllGoals
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const formattedGoal = {
@@ -63,6 +66,8 @@ const FitnessFormPage = () => {
     fetchFitnessGoals();
   };
 
+
+  //handles navigation to dashbaord
   const handleBack = () => {
     navigate("/");
   };

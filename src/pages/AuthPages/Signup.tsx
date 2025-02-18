@@ -16,10 +16,12 @@ const Signup = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  //handles form changes of signup input
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  //handles submit of signup and navigates to login
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -39,6 +41,7 @@ const Signup = () => {
     }
   };
 
+  //handles navigation to dashboard
   const handleBack = () => {
     navigate("/");
   };

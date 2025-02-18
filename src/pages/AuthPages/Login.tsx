@@ -12,10 +12,12 @@ const Login = () => {
 
   const navigate=useNavigate();
 
+  //handles form input of login
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  //handles submit and sets token 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -34,6 +36,7 @@ const Login = () => {
     }
   };
 
+  //handles navigation to dashboard
   const handleBack = () => {
     navigate("/");
   };

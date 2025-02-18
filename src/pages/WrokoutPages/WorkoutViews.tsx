@@ -15,7 +15,6 @@ const WorkoutViews: React.FC = () => {
   const [workoutId, setworkoutId] = useState(null);
 
   const navigate = useNavigate();
-
   
   const sortedWorkouts = [...workouts].sort((a, b) => {
     const dateA = new Date(a.workout_date).getTime();
@@ -30,23 +29,28 @@ const WorkoutViews: React.FC = () => {
   const indexOfFirstWorkout = indexOfLastWorkout - workoutsPerPage;
   const currentWorkouts = sortedWorkouts.slice(indexOfFirstWorkout, indexOfLastWorkout);
   
+  //handles pagination for next page
   const nextPage = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
   
+  //handles pagination for previous page
   const prevPage = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
+  //handles sorting
   const toggleSortOrder = () => {
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
   };
 
+  //handles workout id to delete and opens modal
   const handleDeleteClick = (workoutId:any) => {
     setworkoutId(workoutId);
     setIsModalOpen(true);
   };
 
+  //handles delete cutton call and closing modal
   const confirmDelete = async() => {
     const token:any=localStorage.getItem("token");
     if (workoutId){

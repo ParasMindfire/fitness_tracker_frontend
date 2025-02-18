@@ -1,17 +1,14 @@
-import { Workout } from "../interfaces/WorkoutInterface";
+
 import { useWorkout } from "../contexts/WorkoutContext";
 import { useNavigate } from "react-router-dom";
+import { WorkoutCardProps } from "../interfaces/WorkoutInterface";
 
-interface Props {
-  workout: Workout;
-  onDelete: (goalId: any) => void;
-}
 
-export const WorkoutCard = ({ workout,onDelete }: Props) => {
+export const WorkoutCard = ({ workout,onDelete }: WorkoutCardProps) => {
   const { setFormData, setId } = useWorkout();
   const navigate = useNavigate();
 
-
+  //handles edit and selects workout id to edit 
   const handleEdit = (id: any) => {
     setFormData(workout);
     navigate("/workoutFormPage");

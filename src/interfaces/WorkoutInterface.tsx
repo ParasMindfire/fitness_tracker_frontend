@@ -9,12 +9,17 @@ export interface Workout {
 
   export interface WorkoutContextProps {
     workouts: Workout[];
-    fetchWorkouts: (token: string) => void;
-    formData: Partial<Workout>;
-    setFormData: (data: Partial<Workout>) => void;
-    editMode: boolean;
-    setEditMode: (mode: boolean) => void;
-    selectedWorkout: Workout | null;
-    setSelectedWorkout: (workout: Workout | null) => void;
+    loading: boolean;
+    error: string | null;
+    fetchWorkouts: () => void;
+    formData: Workout | null;
+    setFormData: (workout: Workout | null) => void;
+    setId:any,
+    id:any
+  }
+
+  export interface WorkoutCardProps {
+    workout: Workout;
+    onDelete: (goalId: any) => void;
   }
   

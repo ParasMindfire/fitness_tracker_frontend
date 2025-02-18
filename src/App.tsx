@@ -11,10 +11,8 @@ function App() {
       <WorkoutProvider>
       <UserProvider>
         <BrowserRouter>
-
           <ToastContainer/>
           <Home/>
-          
         </BrowserRouter>
       </UserProvider>
     </WorkoutProvider>

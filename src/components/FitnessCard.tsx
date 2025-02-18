@@ -1,23 +1,19 @@
-// import { useState } from "react";
-import { FitnessGoal } from "../interfaces/FitnessInterface";
 import { useFitness } from "../contexts/FitnessContext";
 import { useNavigate } from "react-router-dom";
+import { FitnessCardProps } from "../interfaces/FitnessInterface";
 
-interface Props {
-  goal: FitnessGoal;
-  onDelete: (goalId: any) => void;
-}
 
-const FitnessCard = ({ goal, onDelete }: Props) => {
+const FitnessCard = ({ goal, onDelete }: FitnessCardProps) => {
   const { setId, setFormData } = useFitness();
   const navigate = useNavigate();
 
-  
+  //calculates percentage of goal completed and is 100% when goal exceeds target
   let percentage = (goal.current_progress / goal.target_value) * 100;
   if (percentage > 100) {
     percentage = 100;
   }
 
+  // Handle the edit button click, which sets form data and navigates to the edit page
   const handleEdit = (id: any) => {
     setFormData(goal);
     navigate("/fitnessFormPage");

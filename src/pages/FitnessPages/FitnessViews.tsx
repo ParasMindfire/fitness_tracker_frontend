@@ -16,19 +16,24 @@ const FitnessViews = () => {
 
   const navigate = useNavigate();
 
+  //handles next button pagination
   const nextPage = () => {
     if (indexOfLastGoal < fitnessGoals.length) setCurrentPage(currentPage + 1);
   };
 
+
+  //handles prev button pagination
   const prevPage = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
+  //handles delete button sets which GoalID to delete and sets modal to open
   const handleDeleteClick = (goalId:any) => {
     setSelectedGoalId(goalId);
     setIsModalOpen(true);
   };
 
+  //handles card delete of goal
   const confirmDelete = () => {
     if (selectedGoalId) {
       removeFitnessGoal(selectedGoalId); 
@@ -37,6 +42,7 @@ const FitnessViews = () => {
     }
   };
 
+  // navigation to dashboard
   const handleBack = () => {
     navigate("/");
   };

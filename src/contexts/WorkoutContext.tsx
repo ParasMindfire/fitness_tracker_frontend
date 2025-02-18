@@ -1,20 +1,12 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { Workout } from "../interfaces/WorkoutInterface";
 import { getUserWorkouts } from "../services/WorkoutAPI";
-
-interface WorkoutContextProps {
-  workouts: Workout[];
-  loading: boolean;
-  error: string | null;
-  fetchWorkouts: () => void;
-  formData: Workout | null;
-  setFormData: (workout: Workout | null) => void;
-  setId:any,
-  id:any
-}
+import { WorkoutContextProps } from "../interfaces/WorkoutInterface";
 
 const WorkoutContext = createContext<WorkoutContextProps | undefined>(undefined);
 
+
+// WorkoutProvider component that provides workout-related state and actions to children components
 export const WorkoutProvider = ({ children }: { children: ReactNode }) => {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -22,6 +14,7 @@ export const WorkoutProvider = ({ children }: { children: ReactNode }) => {
   const [formData, setFormData] = useState<Workout | null>(null);
   const [id,setId]=useState<any>();
 
+  // Function to fetch workouts from the API and update the state
   const fetchWorkouts = async () => {
     try {
       setLoading(true);
@@ -36,17 +29,20 @@ export const WorkoutProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // Fetch workouts when the component is mounted
   useEffect(() => {
     fetchWorkouts();
   }, []);
 
   return (
+    // Provide the context values (workouts, loading, error, etc.) to children components
     <WorkoutContext.Provider value={{ workouts, loading, error, fetchWorkouts, formData, setFormData ,id,setId }}>
       {children}
     </WorkoutContext.Provider>
   );
 };
 
+// Custom hook to access the workout context values
 export const useWorkout = () => {
   const context = useContext(WorkoutContext);
   if (!context) throw new Error("useWorkout must be used within a WorkoutProvider");

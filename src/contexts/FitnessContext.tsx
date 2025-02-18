@@ -6,6 +6,7 @@ import {FitnessContextProps} from "../interfaces/FitnessInterface"
 
 const FitnessContext = createContext<FitnessContextProps | undefined>(undefined);
 
+// FitnessProvider component that provides the context values to the children components
 export const FitnessProvider = ({ children }: { children: ReactNode }) => {
   const [fitnessGoals, setFitnessGoals] = useState<FitnessGoal[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -20,6 +21,7 @@ export const FitnessProvider = ({ children }: { children: ReactNode }) => {
     end_date: null,
   });
 
+  // Function to fetch all fitness goals
   const fetchFitnessGoals = async () => {
     try {
       setLoading(true);
@@ -34,6 +36,7 @@ export const FitnessProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // Function to add a new fitness goal
   const addFitnessGoal = async (goal: any) => {
     try {
         console.log("add fitness goals ",goal);
@@ -44,6 +47,7 @@ export const FitnessProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // Function to update an existing fitness goal
   const editFitnessGoal = async (goal: any) => {
     try {
       await updateFitnessGoal(goal);
@@ -53,6 +57,7 @@ export const FitnessProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+   // Function to remove a fitness goal by ID
   const removeFitnessGoal = async (goal_id: number) => {
     try {
       await deleteFitnessGoal(goal_id);
@@ -63,6 +68,7 @@ export const FitnessProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+   // Function to fetch a single fitness goal by its ID
   const fetchSingleFitnessGoal = async (goal_id: number) => {
     try {
       return await getSingleFitnessGoal(goal_id);
@@ -72,10 +78,12 @@ export const FitnessProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // Use the effect hook to fetch all fitness goals when the component is mounted
   useEffect(() => {
     fetchFitnessGoals();
   }, []);
 
+  // Provide the context values to the children components
   return (
     <FitnessContext.Provider value={{ 
       fitnessGoals, loading, error, fetchFitnessGoals, addFitnessGoal, editFitnessGoal, removeFitnessGoal, fetchSingleFitnessGoal, 
@@ -86,6 +94,7 @@ export const FitnessProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+// Custom hook to access the fitness context values
 export const useFitness = () => {
   const context = useContext(FitnessContext);
   if (!context) throw new Error("useFitness must be used within a FitnessProvider");

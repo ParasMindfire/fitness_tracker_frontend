@@ -26,12 +26,15 @@
       }
     }, [formData]);
 
+
+    //handles workout form change
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setLocalFormData({ ...localFormData, [e.target.name]: e.target.value });
     };
 
     const token = localStorage.getItem("token");
 
+    //handles addworkout and update workout calls
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       if (!token) return;
@@ -65,6 +68,7 @@
       fetchWorkouts();
     };
 
+    //handles navigation to dasboard
     const handleBack = () => {
       navigate("/");
     };

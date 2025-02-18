@@ -6,6 +6,7 @@ const Navbar: React.FC = () => {
   const { user } = useUserContext();
   const navigate = useNavigate();
 
+  //deletes token from local storage and handles logout
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
@@ -15,7 +16,7 @@ const Navbar: React.FC = () => {
     <nav className="bg-blue-600 p-4">
       <div className="flex justify-between items-center">
         <div className="text-white text-2xl font-bold">
-          <Link to="/">Fitness App</Link>
+          <Link to="/">Fitness Tracker</Link>
         </div>
 
         <div className="flex items-center space-x-4">
