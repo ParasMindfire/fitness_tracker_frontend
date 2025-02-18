@@ -3,7 +3,7 @@ import { useWorkout } from "../contexts/WorkoutContext";
 import { useNavigate } from "react-router-dom";
 import { WorkoutCardProps } from "../interfaces/WorkoutInterface";
 
-
+//shows contents for workout form has edit , delete button to edit or delete workout datas
 export const WorkoutCard = ({ workout,onDelete }: WorkoutCardProps) => {
   const { setFormData, setId } = useWorkout();
   const navigate = useNavigate();

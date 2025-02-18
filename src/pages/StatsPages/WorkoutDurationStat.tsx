@@ -2,12 +2,18 @@ import { useEffect, useState } from "react";
 import { useWorkout } from "../../contexts/WorkoutContext";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import dayjs from "dayjs";
+import { WorkoutData } from "../../interfaces/StatsInterface";
 
-interface WorkoutData {
-  date: string;
-  duration: number;
-}
+import { 
+  WORKOUT_PROGRESS, 
+  TRACK_WORKOUT_DURATION, 
+  WEEKLY_PROGRESS, 
+  MONTHLY_PROGRESS, 
+  YEARLY_PROGRESS, 
+} from "../../constants";
 
+
+// This page displays workout duration statistics.
 export const WorkoutDurationStats = () => {
   const { workouts } = useWorkout();
   
@@ -15,6 +21,9 @@ export const WorkoutDurationStats = () => {
   const [monthlyData, setMonthlyData] = useState<WorkoutData[]>([]);
   const [yearlyData, setYearlyData] = useState<WorkoutData[]>([]);
 
+  /*This useEffect hook filters workouts Duration based on the time periods: weekly, monthly, and yearly.
+  It updates the state with the filtered workout duration data 
+  for each period, allowing for dynamic display of workout statistics.*/
   useEffect(() => {
     if (workouts.length > 0) {
       const today = new Date();
@@ -31,8 +40,8 @@ export const WorkoutDurationStats = () => {
 
   return (
     <div className="mt-6">
-      <h2 className="text-2xl font-bold text-center">Your Workout Progress</h2>
-      <p className="text-gray-600 text-center">Track your workout duration over time.</p>
+      <h2 className="text-2xl font-bold text-center">{WORKOUT_PROGRESS}</h2>
+      <p className="text-gray-600 text-center">{TRACK_WORKOUT_DURATION}</p>
   
       {(() => {
         const today = dayjs().format("YYYY-MM-DD");
@@ -43,7 +52,7 @@ export const WorkoutDurationStats = () => {
         return (
           <>
             <div className="mt-8">
-              <h3 className="text-lg font-semibold text-center text-blue-600">Weekly Progress</h3>
+              <h3 className="text-lg font-semibold text-center text-blue-600">{WEEKLY_PROGRESS}</h3>
               <p className="text-sm text-center text-gray-500">
                 Data from <strong>{lastWeek}</strong> to <strong>{today}</strong>
               </p>
@@ -60,7 +69,7 @@ export const WorkoutDurationStats = () => {
             </div>
   
             <div className="mt-8">
-              <h3 className="text-lg font-semibold text-center text-green-600">Monthly Progress</h3>
+              <h3 className="text-lg font-semibold text-center text-green-600">{MONTHLY_PROGRESS}</h3>
               <p className="text-sm text-center text-gray-500">
                 Data from <strong>{lastMonth}</strong> to <strong>{today}</strong>
               </p>
@@ -77,7 +86,7 @@ export const WorkoutDurationStats = () => {
             </div>
   
             <div className="mt-8">
-              <h3 className="text-lg font-semibold text-center text-yellow-600">Yearly Progress</h3>
+              <h3 className="text-lg font-semibold text-center text-yellow-600">{YEARLY_PROGRESS}</h3>
               <p className="text-sm text-center text-gray-500">
                 Data from <strong>{lastYear}</strong> to <strong>{today}</strong>
               </p>

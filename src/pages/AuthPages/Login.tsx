@@ -4,7 +4,9 @@ import { useUserContext } from '../../contexts/UserContext';
 import { LoginData } from '../../interfaces/UserInterface';
 import { useNavigate } from 'react-router-dom';
 import { showToast } from '../../helpers/ToastHelper';
+import { LOGIN,BACK_TO_LANDING } from '../../constants';
 
+// This page allows users to log into their account.
 const Login = () => {
   const [form, setForm] = useState<LoginData>({ email: '', password: '' });
   const { setUser } = useUserContext();
@@ -23,7 +25,6 @@ const Login = () => {
     try {
       const response:any= await login(form);
       if (response.status==200) {
-        console.log("login data ",response);
         setUser(response.user);
         localStorage.setItem("token",response.token);
         showToast("Login Successful","success");
@@ -74,7 +75,7 @@ const Login = () => {
             type="submit"
             className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded-lg transition duration-200"
           >
-            Login
+            {LOGIN}
           </button>
         </form>
 
@@ -82,7 +83,7 @@ const Login = () => {
           onClick={handleBack}
           className="w-96 mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 rounded-lg transition duration-200"
         >
-          Back to Landing
+          {BACK_TO_LANDING}
         </button>
       </div>
     </div>

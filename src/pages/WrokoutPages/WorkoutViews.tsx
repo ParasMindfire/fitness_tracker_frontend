@@ -4,8 +4,10 @@ import { useWorkout } from "../../contexts/WorkoutContext";
 import { deleteWorkout } from "../../services/WorkoutAPI";
 import { showToast } from "../../helpers/ToastHelper";
 import { useNavigate } from "react-router-dom";
+import { YOUR_WORKOUTS,LOADING_WORKOUTS,ASC,ASCENDING,DESCENDING,ARE_U_SURE2,NEXT,PREVIOUS,BACK_TO_DASHBOARD, CONFIRM_DELETE, CANCEL, DELETE, NO_WORKOUTS } from "../../constants";
 
 
+// This page displays all of the user’s recorded workout Cards and pagination has been added on cards
 const WorkoutViews: React.FC = () => {
   const { workouts, loading, error,fetchWorkouts } = useWorkout();
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,6 +18,7 @@ const WorkoutViews: React.FC = () => {
 
   const navigate = useNavigate();
   
+  //requests for sorting according to ascending or descending order
   const sortedWorkouts = [...workouts].sort((a, b) => {
     const dateA = new Date(a.workout_date).getTime();
     const dateB = new Date(b.workout_date).getTime();
@@ -23,6 +26,8 @@ const WorkoutViews: React.FC = () => {
     return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
   });
   
+
+  //logic for pagination
   const totalPages = Math.ceil(sortedWorkouts.length / workoutsPerPage);
   
   const indexOfLastWorkout = currentPage * workoutsPerPage;
@@ -68,9 +73,9 @@ const WorkoutViews: React.FC = () => {
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100 p-8">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-6xl text-center">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6">Your Workouts</h2>
+        <h2 className="text-3xl font-bold text-gray-800 mb-6">{YOUR_WORKOUTS}</h2>
 
-        {loading && <p className="text-gray-500">Loading workouts...</p>}
+        {loading && <p className="text-gray-500">{LOADING_WORKOUTS}</p>}
         {error && <p className="text-red-500">{error}</p>}
 
         {workouts.length > 0 ? (
@@ -80,7 +85,7 @@ const WorkoutViews: React.FC = () => {
                 onClick={toggleSortOrder}
                 className="bg-blue-500 text-white font-medium px-4 py-2 rounded-lg transition-all hover:bg-blue-600"
               >
-                Sort by Date ({sortOrder === 'asc' ? 'Ascending' : 'Descending'})
+                Sort by Date ({sortOrder === ASC ? ASCENDING : DESCENDING})
               </button>
             </div>
 
@@ -100,7 +105,7 @@ const WorkoutViews: React.FC = () => {
                       currentPage === 1 ? "bg-gray-300 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
                     }`}
                   >
-                    Previous
+                    {PREVIOUS}
                   </button>
 
                   <span className="text-gray-700 font-semibold text-lg">
@@ -114,7 +119,7 @@ const WorkoutViews: React.FC = () => {
                       currentPage === totalPages ? "bg-gray-300 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
                     }`}
                   >
-                    Next
+                    {NEXT}
                   </button>
                 </div>
 
@@ -122,21 +127,21 @@ const WorkoutViews: React.FC = () => {
                   onClick={handleBack}
                   className="m-auto w-96 mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 rounded-md transition duration-200"
                 >
-                  Back to Dasboard
+                  {BACK_TO_DASHBOARD}
                 </button>
 
 
                 {isModalOpen && (
                   <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
                     <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-                      <h2 className="text-lg font-bold">Confirm Delete</h2>
-                      <p>Are you sure you want to delete this goal?</p>
+                      <h2 className="text-lg font-bold">{CONFIRM_DELETE}</h2>
+                      <p>{ARE_U_SURE2}</p>
                       <div className="flex justify-end mt-4">
                         <button onClick={() => setIsModalOpen(false)} className="bg-gray-300 px-4 py-2 rounded mr-2">
-                          Cancel
+                          {CANCEL}
                         </button>
                         <button onClick={confirmDelete} className="bg-red-500 text-white px-4 py-2 rounded">
-                          Delete
+                          {DELETE}
                         </button>
                       </div>
                     </div>
@@ -146,7 +151,7 @@ const WorkoutViews: React.FC = () => {
             )}
           </>
         ) : (
-          <p className="text-gray-500 mt-4">No workouts found.</p>
+          <p className="text-gray-500 mt-4">{NO_WORKOUTS}</p>
         )}
       </div>
     </div>

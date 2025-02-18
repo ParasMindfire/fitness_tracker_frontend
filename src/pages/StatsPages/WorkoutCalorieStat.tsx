@@ -2,12 +2,18 @@ import { useEffect, useState } from "react";
 import { useWorkout } from "../../contexts/WorkoutContext";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import dayjs from "dayjs";
+import { CaloriesData } from "../../interfaces/StatsInterface";
+import { 
+  WEEKLY_CALORIES_BURNED, 
+  MONTHLY_CALORIES_BURNED, 
+  YEARLY_CALORIES_BURNED, 
+  CALORIES_BURNED_PROGRESS, 
+  CALORIE_STATS_DESCRIPTION 
+} from "../../constants";
 
-interface CaloriesData {
-  date: string;
-  calories: number;
-}
 
+
+// This page shows the statistics related to the calories burned during workouts.
 export const WorkoutCaloriesStats = () => {
   const { workouts } = useWorkout();
   
@@ -15,6 +21,9 @@ export const WorkoutCaloriesStats = () => {
   const [monthlyData, setMonthlyData] = useState<CaloriesData[]>([]);
   const [yearlyData, setYearlyData] = useState<CaloriesData[]>([]);
 
+  /*This useEffect hook filters calories burnt based on the time periods: weekly, monthly, and yearly.
+  It updates the state with the filtered calories data 
+  for each period, allowing for dynamic display of workout statistics.*/
   useEffect(() => {
     if (workouts.length > 0) {
       const today = new Date();
@@ -31,8 +40,8 @@ export const WorkoutCaloriesStats = () => {
 
   return (
     <div className="mt-6">
-      <h2 className="text-2xl font-bold text-center">Your Calories Burned Progress</h2>
-      <p className="text-gray-600 text-center">Track the calories you've burned over time.</p>
+      <h2 className="text-2xl font-bold text-center">{CALORIES_BURNED_PROGRESS}</h2>
+      <p className="text-gray-600 text-center">{CALORIE_STATS_DESCRIPTION}</p>
   
       {(() => {
         const today = dayjs().format("YYYY-MM-DD");
@@ -43,7 +52,7 @@ export const WorkoutCaloriesStats = () => {
         return (
           <>
             <div className="mt-8">
-              <h3 className="text-lg font-semibold text-center text-red-600">Weekly Calories Burned</h3>
+              <h3 className="text-lg font-semibold text-center text-red-600">{WEEKLY_CALORIES_BURNED}</h3>
               <p className="text-sm text-center text-gray-500">
                 Data from <strong>{lastWeek}</strong> to <strong>{today}</strong>
               </p>
@@ -60,7 +69,7 @@ export const WorkoutCaloriesStats = () => {
             </div>
   
             <div className="mt-8">
-              <h3 className="text-lg font-semibold text-center text-purple-600">Monthly Calories Burned</h3>
+              <h3 className="text-lg font-semibold text-center text-purple-600">{MONTHLY_CALORIES_BURNED}</h3>
               <p className="text-sm text-center text-gray-500">
                 Data from <strong>{lastMonth}</strong> to <strong>{today}</strong>
               </p>
@@ -77,7 +86,7 @@ export const WorkoutCaloriesStats = () => {
             </div>
   =
             <div className="mt-8">
-              <h3 className="text-lg font-semibold text-center text-orange-600">Yearly Calories Burned</h3>
+              <h3 className="text-lg font-semibold text-center text-orange-600">{YEARLY_CALORIES_BURNED}</h3>
               <p className="text-sm text-center text-gray-500">
                 Data from <strong>{lastYear}</strong> to <strong>{today}</strong>
               </p>

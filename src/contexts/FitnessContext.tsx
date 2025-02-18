@@ -39,7 +39,6 @@ export const FitnessProvider = ({ children }: { children: ReactNode }) => {
   // Function to add a new fitness goal
   const addFitnessGoal = async (goal: any) => {
     try {
-        console.log("add fitness goals ",goal);
       await createFitnessGoal(goal);
       fetchFitnessGoals();
     } catch (error) {

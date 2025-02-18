@@ -5,6 +5,7 @@ import { FitnessProvider } from "./contexts/FitnessContext";
 import { Home } from "./routes/Home";
 import { ToastContainer } from "react-toastify";
 
+//App component that sets up the application with necessary context providers and routing
 function App() {
   return (
     <FitnessProvider>

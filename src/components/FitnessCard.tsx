@@ -2,7 +2,7 @@ import { useFitness } from "../contexts/FitnessContext";
 import { useNavigate } from "react-router-dom";
 import { FitnessCardProps } from "../interfaces/FitnessInterface";
 
-
+//shows contents for fitness form has edit , delete button to edit or delete fitness goal datas
 const FitnessCard = ({ goal, onDelete }: FitnessCardProps) => {
   const { setId, setFormData } = useFitness();
   const navigate = useNavigate();

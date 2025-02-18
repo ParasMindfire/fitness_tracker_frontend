@@ -28,8 +28,6 @@ export const createWorkout = async (token: string, workout: any) => {
 
 // Updates an existing workout for the user
 export const updateWorkout = async (token: string, workout: any) => {
-  console.log("Update Aya ??")
-  console.log("workout ", workout);
   const response = await axios.patch(`${API_BASE_URL}/workouts`, workout, {
     headers: { Authorization: `Bearer ${token}` },
   });

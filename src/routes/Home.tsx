@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes,Route } from 'react-router-dom'
 
+// Importing the pages to be routed
 import Landing from "../pages/LandingPage/Landing";
 import Signup from "../pages/AuthPages/Signup";
 import Login from "../pages/AuthPages/Login";
@@ -11,6 +12,8 @@ import { WorkoutDurationStats } from "../pages/StatsPages/WorkoutDurationStat";
 import FitnessFormPage from "../pages/FitnessPages/FitnessFormPage";
 import FitnessViews from "../pages/FitnessPages/FitnessViews";
 
+
+// Home component handles routing for the application
 export const Home:React.FC=()=>{
     return (
         <Routes>

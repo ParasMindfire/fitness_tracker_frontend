@@ -18,7 +18,6 @@ export const getAllFitnessGoals = async () => {
 
 // Creates a new fitness goal for the user
 export const createFitnessGoal = async (goal:any) => {
-    console.log("createFitness ",goal);
     const token=localStorage.getItem("token");
   try {
     await axios.post(`${API_URL}/goals`, goal,{
@@ -33,7 +32,6 @@ export const createFitnessGoal = async (goal:any) => {
 // Updates an existing fitness goal
 export const updateFitnessGoal = async (goal:any) => {
   try {
-    console.log("goal update ",goal);
     await axios.patch(`${API_URL}/goals`, goal);
   } catch (error) {
     console.error("Error updating fitness goal:", error);
@@ -46,7 +44,6 @@ export const updateFitnessGoal = async (goal:any) => {
 export const deleteFitnessGoal = async (id: any) => {
   try {
     const obj:any={id:id}
-    console.log("delete Fess ",id);
     await axios.delete(`${API_URL}/goals/${id}`, obj);
   } catch (error) {
     console.error("Error deleting fitness goal:", error);

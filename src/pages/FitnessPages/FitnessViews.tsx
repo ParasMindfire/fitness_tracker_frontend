@@ -2,7 +2,10 @@ import { useState } from "react";
 import { useFitness } from "../../contexts/FitnessContext";
 import FitnessCard from "../../components/FitnessCard";
 import { useNavigate } from "react-router-dom";
+import { PREVIOUS,NEXT,CANCEL,DELETE, BACK_TO_DASHBOARD,FITNESS_GOALS,LOAD_FITNESS,NO_FITNESS,CONFIRM_DELETE,ARE_U_SURE} from "../../constants";
 
+
+// This page displays the goal cards.And Pagination of that card
 const FitnessViews = () => {
   const { fitnessGoals, loading, error,removeFitnessGoal } = useFitness();
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,7 +40,6 @@ const FitnessViews = () => {
   const confirmDelete = () => {
     if (selectedGoalId) {
       removeFitnessGoal(selectedGoalId); 
-      console.log("Deleting goal with ID:", selectedGoalId);
       setIsModalOpen(false);
     }
   };
@@ -50,9 +52,9 @@ const FitnessViews = () => {
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100">
   <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-7xl text-center"> 
-    <h2 className="text-2xl font-bold text-gray-800 mb-6">Fitness Goals</h2>
+    <h2 className="text-2xl font-bold text-gray-800 mb-6">{FITNESS_GOALS}</h2>
 
-    {loading && <p className="text-gray-500">Loading fitness goals...</p>}
+    {loading && <p className="text-gray-500">{LOAD_FITNESS}</p>}
     {error && <p className="text-red-500">{error}</p>}
 
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -65,7 +67,7 @@ const FitnessViews = () => {
           />
         ))
       ) : (
-        <p className="text-gray-500">No fitness goals found.</p>
+        <p className="text-gray-500">{NO_FITNESS}</p>
       )}
     </div>
 
@@ -80,7 +82,7 @@ const FitnessViews = () => {
               : "bg-blue-500 hover:bg-blue-600"
           }`}
         >
-          Previous
+          {PREVIOUS}
         </button>
         <button
           onClick={nextPage}
@@ -91,7 +93,7 @@ const FitnessViews = () => {
               : "bg-blue-500 hover:bg-blue-600"
           }`}
         >
-          Next
+          {NEXT}
         </button>
       </div>
 
@@ -99,7 +101,7 @@ const FitnessViews = () => {
         onClick={handleBack}
         className="m-auto w-96 mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 rounded-md transition duration-200"
       >
-        Back to Dashboard
+        {BACK_TO_DASHBOARD}
       </button>
     </div>
   </div>
@@ -107,20 +109,20 @@ const FitnessViews = () => {
   {isModalOpen && (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-lg font-bold">Confirm Delete</h2>
-        <p>Are you sure you want to delete this goal?</p>
+        <h2 className="text-lg font-bold">{CONFIRM_DELETE}</h2>
+        <p>{ARE_U_SURE}</p>
         <div className="flex justify-end mt-4">
           <button
             onClick={() => setIsModalOpen(false)}
             className="bg-gray-300 px-4 py-2 rounded mr-2"
           >
-            Cancel
+            {CANCEL}
           </button>
           <button
             onClick={confirmDelete}
             className="bg-red-500 text-white px-4 py-2 rounded"
           >
-            Delete
+            {DELETE}
           </button>
         </div>
       </div>

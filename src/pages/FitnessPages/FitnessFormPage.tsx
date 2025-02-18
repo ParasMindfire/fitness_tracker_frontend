@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { useFitness } from "../../contexts/FitnessContext";
 import { showToast } from "../../helpers/ToastHelper";
 import { useNavigate } from "react-router-dom";
+import { GOAL_TYPE,WEIGHT_LOSS,TARGET_VALUE,CURRENT_PROGRESS,START_DATE,END_DATA,STATUS,PENDING,COMPLETE,INCOMPLETE,UPDATE_GOAL,ADD_GOAL,BACK_TO_DASHBOARD } from "../../constants";
 
+
+//A page where users can input fitness goals.
 const FitnessFormPage = () => {
   const { addFitnessGoal, editFitnessGoal, id, setId, formData, setFormData, fetchFitnessGoals } = useFitness();
   const navigate = useNavigate();
@@ -15,6 +18,8 @@ const FitnessFormPage = () => {
     status: "pending",
   });
 
+    /*This hook listens for any changes to the formData When formData is updated, 
+    it automatically populates the form fields with the existing fitness details.*/
   useEffect(() => {
     if (formData) {
       setLocalFormData({
@@ -84,7 +89,7 @@ const FitnessFormPage = () => {
 
         <div className="space-y-4">
           <div>
-            <label htmlFor="goal_type" className="block text-gray-700 font-medium">Goal Type</label>
+            <label htmlFor="goal_type" className="block text-gray-700 font-medium">{GOAL_TYPE}</label>
             <select
               id="goal_type"
               name="goal_type"
@@ -92,13 +97,13 @@ const FitnessFormPage = () => {
               onChange={handleChange}
               className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
             >
-              <option value="weight_loss">Weight Loss</option>
+              <option value="weight_loss">{WEIGHT_LOSS}</option>
               <option value="workout_per_week">Workout Per Week</option>
             </select>
           </div>
 
           <div>
-            <label htmlFor="target_value" className="block text-gray-700 font-medium">Target Value</label>
+            <label htmlFor="target_value" className="block text-gray-700 font-medium">{TARGET_VALUE}</label>
             <input
               type="number"
               id="target_value"
@@ -110,7 +115,7 @@ const FitnessFormPage = () => {
           </div>
 
           <div>
-            <label htmlFor="current_progress" className="block text-gray-700 font-medium">Current Progress</label>
+            <label htmlFor="current_progress" className="block text-gray-700 font-medium">{CURRENT_PROGRESS}</label>
             <input
               type="number"
               id="current_progress"
@@ -122,7 +127,7 @@ const FitnessFormPage = () => {
           </div>
 
           <div>
-            <label htmlFor="start_date" className="block text-gray-700 font-medium">Start Date</label>
+            <label htmlFor="start_date" className="block text-gray-700 font-medium">{START_DATE}</label>
             <input
               type="date"
               id="start_date"
@@ -134,7 +139,7 @@ const FitnessFormPage = () => {
           </div>
 
           <div>
-            <label htmlFor="end_date" className="block text-gray-700 font-medium">End Date</label>
+            <label htmlFor="end_date" className="block text-gray-700 font-medium">{END_DATA}</label>
             <input
               type="date"
               id="end_date"
@@ -146,7 +151,7 @@ const FitnessFormPage = () => {
           </div>
 
           <div>
-            <label htmlFor="status" className="block text-gray-700 font-medium">Status</label>
+            <label htmlFor="status" className="block text-gray-700 font-medium">{STATUS}</label>
             <select
               id="status"
               name="status"
@@ -154,14 +159,14 @@ const FitnessFormPage = () => {
               onChange={handleChange}
               className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
             >
-              <option value="pending">Pending</option>
-              <option value="complete">Complete</option>
-              <option value="incomplete">Incomplete</option>
+              <option value="pending">{PENDING}</option>
+              <option value="complete">{COMPLETE}</option>
+              <option value="incomplete">{INCOMPLETE}</option>
             </select>
           </div>
 
           <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg w-full transition">
-            {id !== null ? "Update Goal" : "Add Goal"}
+            {id !== null ? UPDATE_GOAL : ADD_GOAL}
           </button>
 
           <button
@@ -169,7 +174,7 @@ const FitnessFormPage = () => {
         type="button"
         className=" w-full mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 rounded-md transition duration-200"
       >
-        Back to Dasboard
+        {BACK_TO_DASHBOARD}
       </button>
         </div>
       </form>

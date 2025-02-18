@@ -3,7 +3,10 @@ import { signup } from "../../services/UserAPI";
 import { User } from "../../interfaces/UserInterface";
 import { useNavigate } from "react-router-dom";
 import { showToast } from "../../helpers/ToastHelper";
+import { SIGNUP,BACK_TO_LANDING} from "../../constants";
 
+
+//This page allows new users to create an account.
 const Signup = () => {
   const [form, setForm] = useState<User>({
     name: "",
@@ -29,7 +32,6 @@ const Signup = () => {
     try {
       const response:any= await signup(form);
       if (response.status==200) {
-        console.log("Signup data ",response);
         showToast("Signup Successful","success");
         navigate("/login");
       } else {
@@ -104,7 +106,7 @@ const Signup = () => {
             type="submit"
             className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded-lg transition duration-200"
           >
-            Signup
+            {SIGNUP}
           </button>
         </form>
 
@@ -112,7 +114,7 @@ const Signup = () => {
           onClick={handleBack}
           className="w-96 mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 rounded-lg transition duration-200"
         >
-          Back to Landing
+          {BACK_TO_LANDING}
         </button>
       </div>
     </div>
