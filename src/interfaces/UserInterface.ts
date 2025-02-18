@@ -17,4 +17,9 @@ export interface User {
     user?: T;
     message?: string;
   }
+
+  export interface UserInterface {
+    user: any;
+    setUser: (user: any) => void;
+  }
   

@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { Workout } from "../interfaces/workoutInterface";
+import { Workout } from "../interfaces/WorkoutInterface";
 import { getUserWorkouts } from "../services/WorkoutAPI";
 
 interface WorkoutContextProps {

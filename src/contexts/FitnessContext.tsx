@@ -1,32 +1,8 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { getAllFitnessGoals, createFitnessGoal, updateFitnessGoal, deleteFitnessGoal, getSingleFitnessGoal } from "../services/FitnessAPI";
-import { showToast } from "../helpers/toastHelper";
-
-export interface FitnessGoal {
-  goal_id: number;
-  user_id: number;
-  goal_type: "weight_loss" | "workout_per_week";
-  target_value: number;
-  current_progress: number;
-  start_date: string;
-  end_date: string | null;
-  status: "pending" | "complete" | "incomplete";
-}
-
-interface FitnessContextProps {
-  fitnessGoals: FitnessGoal[];
-  loading: boolean;
-  error: string | null;
-  fetchFitnessGoals: () => void;
-  addFitnessGoal: any;
-  editFitnessGoal: any;
-  removeFitnessGoal:any;
-  fetchSingleFitnessGoal: any;
-  id: number | null;
-  setId: any;
-  formData: any;
-  setFormData:any;
-}
+import { showToast } from "../helpers/ToastHelper";
+import { FitnessGoal } from "../interfaces/FitnessInterface";
+import {FitnessContextProps} from "../interfaces/FitnessInterface"
 
 const FitnessContext = createContext<FitnessContextProps | undefined>(undefined);
 

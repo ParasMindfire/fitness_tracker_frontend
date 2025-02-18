@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { WorkoutCard } from "../components/WorkoutCard";
 import { useWorkout } from "../contexts/WorkoutContext";
 import { deleteWorkout } from "../services/WorkoutAPI";
-import { showToast } from "../helpers/toastHelper";
+import { showToast } from "../helpers/ToastHelper";
 
 const WorkoutViews: React.FC = () => {
   const { workouts, loading, error,fetchWorkouts } = useWorkout();

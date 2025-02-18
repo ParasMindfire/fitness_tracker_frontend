@@ -1,4 +1,4 @@
-import { Workout } from "../interfaces/workoutInterface";
+import { Workout } from "../interfaces/WorkoutInterface";
 import { useWorkout } from "../contexts/WorkoutContext";
 import { useNavigate } from "react-router-dom";
 

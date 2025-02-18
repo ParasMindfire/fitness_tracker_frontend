@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { signup } from "../services/UserAPI";
 // import { useUserContext } from "../contexts/UserContext";
-import { User } from "../interfaces/types";
+import { User } from "../interfaces/UserInterface";
 import { useNavigate } from "react-router-dom";
-import { showToast } from "../helpers/toastHelper";
+import { showToast } from "../helpers/ToastHelper";
 
 const Signup = () => {
   const [form, setForm] = useState<User>({

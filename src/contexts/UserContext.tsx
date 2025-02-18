@@ -1,9 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
-
-interface UserInterface {
-  user: any;
-  setUser: (user: any) => void;
-}
+import { UserInterface } from '../interfaces/UserInterface';
 
 const UserContext = createContext<UserInterface | undefined>(undefined);
 

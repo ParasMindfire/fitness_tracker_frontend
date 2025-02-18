@@ -1,7 +1,7 @@
 import { useWorkout } from "../contexts/WorkoutContext";
 import { createWorkout, updateWorkout } from "../services/WorkoutAPI";
 import { useEffect, useState } from "react";
-import { showToast } from "../helpers/toastHelper";
+import { showToast } from "../helpers/ToastHelper";
 import { useNavigate } from "react-router-dom";
 
 export const WorkoutFormPage = () => {

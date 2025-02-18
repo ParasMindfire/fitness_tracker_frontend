@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useFitness } from "../contexts/FitnessContext";
-import { showToast } from "../helpers/toastHelper";
+import { showToast } from "../helpers/ToastHelper";
 import { useNavigate } from "react-router-dom";
 
 const FitnessFormPage = () => {

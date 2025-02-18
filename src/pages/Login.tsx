@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { login } from '../services/UserAPI';
 import { useUserContext } from '../contexts/UserContext';
-import { LoginData } from '../interfaces/types';
+import { LoginData } from '../interfaces/UserInterface';
 import { useNavigate } from 'react-router-dom';
-import { showToast } from '../helpers/toastHelper';
+import { showToast } from '../helpers/ToastHelper';
 
 const Login = () => {
   const [form, setForm] = useState<LoginData>({ email: '', password: '' });
