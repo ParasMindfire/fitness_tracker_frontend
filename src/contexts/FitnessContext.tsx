@@ -1,8 +1,8 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, useMemo, ReactNode } from "react";
 import { getAllFitnessGoals, createFitnessGoal, updateFitnessGoal, deleteFitnessGoal, getSingleFitnessGoal } from "../services/FitnessAPI";
 import { showToast } from "../helpers/ToastHelper";
 import { FitnessGoal } from "../interfaces/FitnessInterface";
-import {FitnessContextProps} from "../interfaces/FitnessInterface"
+import { FitnessContextProps } from "../interfaces/FitnessInterface";
 
 const FitnessContext = createContext<FitnessContextProps | undefined>(undefined);
 
@@ -11,7 +11,6 @@ export const FitnessProvider = ({ children }: { children: ReactNode }) => {
   const [fitnessGoals, setFitnessGoals] = useState<FitnessGoal[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
   const [id, setId] = useState<number | null>(null);
   const [formData, setFormData] = useState<Omit<FitnessGoal, "goal_id" | "user_id" | "status">>({
     goal_type: "weight_loss",
@@ -56,18 +55,18 @@ export const FitnessProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-   // Function to remove a fitness goal by ID
+  // Function to remove a fitness goal by ID
   const removeFitnessGoal = async (goal_id: number) => {
     try {
       await deleteFitnessGoal(goal_id);
-      showToast("Goal Deleted Successfully","success");
+      showToast("Goal Deleted Successfully", "success");
       fetchFitnessGoals();
     } catch (error) {
       console.error("Error deleting fitness goal:", error);
     }
   };
 
-   // Function to fetch a single fitness goal by its ID
+  // Function to fetch a single fitness goal by its ID
   const fetchSingleFitnessGoal = async (goal_id: number) => {
     try {
       return await getSingleFitnessGoal(goal_id);
@@ -82,12 +81,25 @@ export const FitnessProvider = ({ children }: { children: ReactNode }) => {
     fetchFitnessGoals();
   }, []);
 
+  // Memoize the context value to prevent unnecessary re-renders
+  const contextValue = useMemo(() => ({
+    fitnessGoals,
+    loading,
+    error,
+    fetchFitnessGoals,
+    addFitnessGoal,
+    editFitnessGoal,
+    removeFitnessGoal,
+    fetchSingleFitnessGoal,
+    id,
+    setId,
+    formData,
+    setFormData,
+  }), [fitnessGoals, loading, error, id, formData]);
+
   // Provide the context values to the children components
   return (
-    <FitnessContext.Provider value={{ 
-      fitnessGoals, loading, error, fetchFitnessGoals, addFitnessGoal, editFitnessGoal, removeFitnessGoal, fetchSingleFitnessGoal, 
-      id, setId, formData, setFormData
-    }}>
+    <FitnessContext.Provider value={contextValue}>
       {children}
     </FitnessContext.Provider>
   );
@@ -99,5 +111,3 @@ export const useFitness = () => {
   if (!context) throw new Error("useFitness must be used within a FitnessProvider");
   return context;
 };
-
-

@@ -1,5 +1,4 @@
 import React from "react";
-// import Navbar from "../../components/Navbar";
 import { useUserContext } from "../../contexts/UserContext";
 import { Link } from "react-router-dom";
 import { WELCOME,PERSONAL_TRACKER,ALREADY_A_USER,WORKOUT,MANAGE_WORKOUT,ADD_WORKOUT,VIEW_WORKOUT,FITNESS,FITNESS_TITLE,ADD_FITNESS_GOAL,VIEW_FITNESS_GOAL,STAT,ANA_PROGRESS,VIEW_CALORIES,DURATIONS_STATS, SIGNUP } from "../../constants";
@@ -12,7 +11,6 @@ const Landing: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* <Navbar /> */}
 
       <div className="flex-1 flex items-center justify-center bg-gray-200">
         {!user ? (
