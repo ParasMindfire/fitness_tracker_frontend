@@ -69,4 +69,32 @@ export const ASC="asc"
 export const ASCENDING="Ascending"
 export const DESCENDING="Descending"
 export const ARE_U_SURE2="Are you sure you want to delete this Workout";
+export const NO_WORKOUTS="No workouts found."
 
+
+export const TARGET = "Target:";
+export const PROGRESS = "Progress:";
+export const START = "Start:";
+export const END = "End:";
+export const PERCENT_ACHIEVED = "% Achieved";
+export const EDIT = "Edit";
+export const STATUS_COMPLETE = "complete";
+
+export const NAVBAR_TITLE = "Fitness Tracker";
+export const WORKOUTS = "Workouts";
+export const FITNESS_GOALS_TITLE = "Fitness Goals";
+export const STATS_TITLE = "Stats";
+export const VIEW_WORKOUTS = "View Workouts";
+export const ADD_WORKOUT_TITLE = "Add Workout";
+export const VIEW_FITNESS_GOALS = "View Fitness Goals";
+export const ADD_FITNESS_GOAL_TITLE = "Add Fitness Goal";
+export const CALORIE_STATS = "Calorie Stats";
+export const DURATION_STATS = "Duration Stats";
+export const LOGOUT_BUTTON = "Logout";
+export const LOGIN_BUTTON = "Login";
+export const SIGNUP_BUTTON = "Signup";
+
+
+export const DURATION_LABEL = "Duration:";
+export const CALORIES_LABEL = "Calories:";
+export const DATE_LABEL = "Date:";

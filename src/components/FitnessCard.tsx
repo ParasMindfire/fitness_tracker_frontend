@@ -1,6 +1,9 @@
 import { useFitness } from "../contexts/FitnessContext";
 import { useNavigate } from "react-router-dom";
 import { FitnessCardProps } from "../interfaces/FitnessInterface";
+import { TARGET, PROGRESS, START, END, PERCENT_ACHIEVED, EDIT, DELETE} from "../constants";
+
+
 
 //shows contents for fitness form has edit , delete button to edit or delete fitness goal datas
 const FitnessCard = ({ goal, onDelete }: FitnessCardProps) => {
@@ -20,7 +23,6 @@ const FitnessCard = ({ goal, onDelete }: FitnessCardProps) => {
     setId(id);
   };
 
-
   return (
     <div className="relative bg-white shadow-md rounded-xl p-4 border border-gray-200 w-96 transition-transform hover:scale-105 hover:shadow-lg">
       <h2 className="text-lg font-bold text-gray-700 uppercase truncate">
@@ -29,17 +31,17 @@ const FitnessCard = ({ goal, onDelete }: FitnessCardProps) => {
 
       <div className="text-gray-600 text-sm mt-2 space-y-1">
         <p>
-          <span className="font-semibold">Target:</span> {goal.target_value}
+          <span className="font-semibold">{TARGET}</span> {goal.target_value}
         </p>
         <p>
-          <span className="font-semibold">Progress:</span> {goal.current_progress}
+          <span className="font-semibold">{PROGRESS}</span> {goal.current_progress}
         </p>
         <p>
-          <span className="font-semibold">Start:</span> {new Date(goal.start_date).toLocaleDateString()}
+          <span className="font-semibold">{START}</span> {new Date(goal.start_date).toLocaleDateString()}
         </p>
         {goal.end_date && (
           <p>
-            <span className="font-semibold">End:</span> {new Date(goal.end_date).toLocaleDateString()}
+            <span className="font-semibold">{END}</span> {new Date(goal.end_date).toLocaleDateString()}
           </p>
         )}
       </div>
@@ -57,7 +59,7 @@ const FitnessCard = ({ goal, onDelete }: FitnessCardProps) => {
         <div className="mt-4">
           <div className="flex mb-2 items-center justify-between">
             <span className="text-sm font-semibold inline-block py-1 px-2 uppercase rounded-full text-green-600 bg-green-100">
-              {Math.round(percentage)}% Achieved
+              {Math.round(percentage)}{PERCENT_ACHIEVED}
             </span>
           </div>
           <div className="relative pt-1">
@@ -77,13 +79,13 @@ const FitnessCard = ({ goal, onDelete }: FitnessCardProps) => {
           onClick={() => handleEdit(goal.goal_id)}
           className="bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium px-3 py-1 rounded-lg transition-all"
         >
-          Edit
+          {EDIT}
         </button>
         <button
           onClick={() => onDelete(goal.goal_id)}
           className="bg-red-500 hover:bg-red-600 text-white text-xs font-medium px-3 py-1 rounded-lg transition-all"
         >
-          Delete
+          {DELETE}
         </button>
       </div>
     </div>
