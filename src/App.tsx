@@ -1,5 +1,4 @@
 import { Home } from "./routes/Home";
-import { ToastContainer } from "react-toastify";
 import Providers from "./contexts/Providers";
 import Layout from "./Layouts/Layout";
 
@@ -8,7 +7,6 @@ function App() {
   return (
     <Providers>
       <Layout>
-        <ToastContainer/>
         <Home/>
       </Layout>
     </Providers>    
