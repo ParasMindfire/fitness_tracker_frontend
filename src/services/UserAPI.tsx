@@ -23,3 +23,16 @@ export const login = async (data: LoginData): Promise<APIResponse<User>> => {
     throw error;
   }
 };
+
+
+// Fetch all users
+export const getAllUsers = async (): Promise<User[]> => {
+  try {
+    const response = await axios.get<User[]>(`${API_URL}/all/users`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw error;
+  }
+};
+

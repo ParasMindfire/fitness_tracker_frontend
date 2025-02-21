@@ -22,4 +22,11 @@ export interface Workout {
     workout: Workout;
     onDelete: (goalId: any) => void;
   }
+
+  export interface workoutByAll{
+    name:string,
+    excercise_type:string,
+    duration:number,
+    calories_burned:number
+  }
   

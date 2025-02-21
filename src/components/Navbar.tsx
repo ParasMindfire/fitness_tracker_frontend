@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../contexts/UserContext";
 import {  
@@ -16,17 +16,60 @@ import {
   LOGIN_BUTTON,  
   SIGNUP_BUTTON,
 } from "../constants";
+import { fetchSteak, fetchWorkoutDates } from "../services/WorkoutAPI";
+import { useWorkout } from "../contexts/WorkoutContext";
+import { Workout } from "../interfaces/WorkoutInterface";
 
-
-//Navbar Component having all the routings of the pages
 const Navbar: React.FC = () => {
-  const { user } = useUserContext();
+  const { user, setUser } = useUserContext();
+  const { workouts } = useWorkout();
   const navigate = useNavigate();
 
-  //deletes token from local storage and handles logout
+  const [streak, setStreak] = useState<number>(0);
+  const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
+  const [workoutDates, setWorkoutDates] = useState<Workout[]>([]);
+
+  useEffect(() => {
+    if (user) {
+      const fetchStreak = async () => {
+        const currStreak: number | { streak: number } = await fetchSteak();
+        console.log("Fetched Streak:", currStreak);
+        setStreak(typeof currStreak === "object" ? currStreak.streak : currStreak);
+      };
+
+      const fetchDates = async () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.getMonth() + 1;
+      
+        const allDates: Workout[] = await fetchWorkoutDates(year, month);
+        const filteredDates = allDates.filter(workout => {
+          const workoutMonth = new Date(workout.workout_date).getMonth() + 1;
+          return workoutMonth === month;
+        });
+      
+        setWorkoutDates(filteredDates);
+      };
+      
+
+      fetchStreak();
+      fetchDates();
+    }
+  }, [user, workouts]);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
+    setUser("");
     navigate("/login");
+  };
+
+  const getCurrentMonthDays = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    return Array.from({ length: daysInMonth }, (_, i) => new Date(year, month, i + 1));
   };
 
   return (
@@ -80,12 +123,36 @@ const Navbar: React.FC = () => {
                   </Link>
                 </div>
               </div>
-              <button
-                onClick={handleLogout}
-                className="text-white hover:bg-blue-500 px-4 py-2 rounded-lg"
-              >
-                {LOGOUT_BUTTON}
-              </button>
+
+              <div className="relative group">
+                <button
+                  onClick={() => setIsCalendarOpen(true)}
+                  className="text-white hover:bg-blue-500 px-4 py-2 rounded-lg"
+                >
+                  Calendar
+                </button>
+              </div>
+
+              <div className="text-white px-4 py-2 rounded-lg bg-green-500">
+                Streak: {streak} days
+              </div>
+
+              <div className="relative group">
+                <button className="text-white hover:bg-blue-500 px-4 py-2 rounded-lg">
+                  {user && user.name ? user.name : "Profile"}
+                </button>
+                <div className="absolute right-1 hidden bg-white text-black shadow-lg rounded-lg min-w-32 group-hover:block">
+                  <Link to="/profile" className="block px-4 py-2 hover:bg-gray-200">
+                    View Profile
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-200"
+                  >
+                    {LOGOUT_BUTTON}
+                   </button>
+                </div>
+              </div>
             </>
           ) : (
             <>
@@ -99,6 +166,54 @@ const Navbar: React.FC = () => {
           )}
         </div>
       </div>
+
+      {isCalendarOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white rounded-lg p-6 w-96 relative">
+            <button
+              onClick={() => setIsCalendarOpen(false)}
+              className="absolute top-2 right-2 text-red-500"
+            >
+              X
+            </button>
+            <h2 className="text-xl font-bold text-center mb-4">Workout Calendar</h2>
+            <div className="grid grid-cols-7 gap-2">
+              {getCurrentMonthDays().map((day) => {
+                const dateStr = day.toLocaleDateString("en-CA");
+
+                // console.log("datestr ",dateStr);
+
+                const isWorkoutDay = workoutDates.some((workout) => workout.workout_date == dateStr
+              );
+
+              // console.log("isworkout ",isWorkoutDay);
+
+                const isFutureDate = day > new Date();
+
+                const workoutCount = workoutDates.filter(
+                  (workout) => workout.workout_date === dateStr
+                ).length;
+
+                return (
+                  <div
+                    key={dateStr}
+                    className={`w-10 h-10 flex items-center justify-center rounded-full 
+                      ${isFutureDate
+                        ? "bg-gray-400 text-white"
+                        : workoutCount > 1
+                          ? "bg-yellow-400 text-white" 
+                          : isWorkoutDay
+                            ? "bg-green-400 text-white"
+                            : "bg-red-400 text-white"}`}
+                  >
+                    {day.getDate()}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
