@@ -6,6 +6,7 @@ export interface User {
     password: string;
     phone: string;
     address: string;
+    profile_pic: string,
   }
   
   export interface LoginData {

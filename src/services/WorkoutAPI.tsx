@@ -50,7 +50,7 @@ export const fetchSteak=async()=>{
     headers: { Authorization: `Bearer ${token}` },
   })
 
-  console.log("response ",response);
+  console.log("streak response ",response);
 
   return response.data;
 }
@@ -66,3 +66,26 @@ export const fetchWorkoutDates = async (year:any, month:any) => {
     console.log("Workout Dates Response:", response.data);
     return response.data;
 };
+
+
+export const uploadUserPhoto = async (file: File,email:string) => {
+  const formData = new FormData();
+  formData.append("photo", file);
+  formData.append("email",email);
+
+  console.log("file aya ",file);
+
+  try {
+    const response = await axios.post(`${API_BASE_URL}/users/photo`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error: any) {
+    console.error("Photo upload failed:", error.response?.data || error.message);
+    throw new Error(error.response?.data?.message || "Photo upload failed");
+  }
+};
+

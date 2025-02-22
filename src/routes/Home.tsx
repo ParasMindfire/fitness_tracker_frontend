@@ -11,6 +11,7 @@ import { WorkoutCaloriesStats } from "../pages/StatsPages/WorkoutCalorieStat";
 import { WorkoutDurationStats } from "../pages/StatsPages/WorkoutDurationStat";
 import FitnessFormPage from "../pages/FitnessPages/FitnessFormPage";
 import FitnessViews from "../pages/FitnessPages/FitnessViews";
+import ProfilePage from "../pages/ProfilePage/Profile";
 
 
 // Home component handles routing for the application
@@ -27,6 +28,7 @@ export const Home:React.FC=()=>{
             <Route path="/fitnessViews" element={<FitnessViews />} />
             <Route path="/calories" element={<WorkoutCaloriesStats />} />
             <Route path="/durations" element={<WorkoutDurationStats />} />
+            <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     )
 }

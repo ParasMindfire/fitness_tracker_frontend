@@ -36,3 +36,18 @@ export const getAllUsers = async (): Promise<User[]> => {
   }
 };
 
+
+export const getSingleUSer = async (): Promise<User> => {
+  try {
+    const token=localStorage.getItem("token");
+    const response = await axios.get<User[]>(`${API_URL}/single/users`,{
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    // console.log("response aya ??",response);
+    return response.data[0];
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw error;
+  }
+};
+
