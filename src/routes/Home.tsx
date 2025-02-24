@@ -5,7 +5,7 @@ import { Routes,Route } from 'react-router-dom'
 import Landing from "../pages/LandingPage/Landing";
 import Signup from "../pages/AuthPages/Signup";
 import Login from "../pages/AuthPages/Login";
-import { WorkoutFormPage } from "../pages/WrokoutPages/WorkoutFormPage";
+import WorkoutFormPage from "../pages/WrokoutPages/WorkoutFormPage";
 import WorkoutViews from "../pages/WrokoutPages/WorkoutViews";
 import { WorkoutCaloriesStats } from "../pages/StatsPages/WorkoutCalorieStat";
 import { WorkoutDurationStats } from "../pages/StatsPages/WorkoutDurationStat";

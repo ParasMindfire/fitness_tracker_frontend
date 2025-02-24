@@ -1,18 +1,18 @@
-import axios from "axios";
+import axiosInstance from "./AuthInterceptor"
 
 const API_BASE_URL = "http://localhost:3000";
 
-const token = localStorage.getItem("token");
+const token = localStorage.getItem("accessToken");
 
 // Fetches all available workouts
 export const getAllWorkouts = async () => {
-  const response = await axios.get(`${API_BASE_URL}/all/workouts`);
+  const response = await axiosInstance.get(`${API_BASE_URL}/all/workouts`);
   return response.data;
 };
 
 // Fetches workouts specific to the current user
 export const getUserWorkouts = async () => {
-  const response = await axios.get(`${API_BASE_URL}/workouts`, {
+  const response = await axiosInstance.get(`${API_BASE_URL}/workouts`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;
@@ -20,7 +20,7 @@ export const getUserWorkouts = async () => {
 
 // Creates a new workout for the user
 export const createWorkout = async (token: string, workout: any) => {
-  const response = await axios.post(`${API_BASE_URL}/workouts`, workout, {
+  const response = await axiosInstance.post(`${API_BASE_URL}/workouts`, workout, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;
@@ -28,7 +28,7 @@ export const createWorkout = async (token: string, workout: any) => {
 
 // Updates an existing workout for the user
 export const updateWorkout = async (token: string, workout: any) => {
-  const response = await axios.patch(`${API_BASE_URL}/workouts`, workout, {
+  const response = await axiosInstance.patch(`${API_BASE_URL}/workouts`, workout, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;
@@ -36,7 +36,7 @@ export const updateWorkout = async (token: string, workout: any) => {
 
 // Deletes a specific workout for the user
 export const deleteWorkout = async (token: string, workout_id: number) => {
-  const response = await axios.delete(`${API_BASE_URL}/workouts`, {
+  const response = await axiosInstance.delete(`${API_BASE_URL}/workouts`, {
     headers: { Authorization: `Bearer ${token}` },
     data: { workout_id },
   });
@@ -46,7 +46,7 @@ export const deleteWorkout = async (token: string, workout_id: number) => {
 
 export const fetchSteak=async()=>{
   console.log("ara ?")
-  const response=await axios.get(`${API_BASE_URL}/streaks`,{
+  const response=await axiosInstance.get(`${API_BASE_URL}/streaks`,{
     headers: { Authorization: `Bearer ${token}` },
   })
 
@@ -58,7 +58,7 @@ export const fetchSteak=async()=>{
 
 export const fetchWorkoutDates = async (year:any, month:any) => {
     console.log("Fetching Workout Dates");
-    const response = await axios.get(`${API_BASE_URL}/days`, {
+    const response = await axiosInstance.get(`${API_BASE_URL}/days`, {
       headers: { Authorization: `Bearer ${token}` },
       params: { year, month },
     });
@@ -76,7 +76,7 @@ export const uploadUserPhoto = async (file: File,email:string) => {
   console.log("file aya ",file);
 
   try {
-    const response = await axios.post(`${API_BASE_URL}/users/photo`, formData, {
+    const response = await axiosInstance.post(`${API_BASE_URL}/users/photo`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,

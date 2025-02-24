@@ -1,43 +1,44 @@
-import { useState } from 'react';
-import { login } from '../../services/UserAPI';
-import { useUserContext } from '../../contexts/UserContext';
-import { LoginData } from '../../interfaces/UserInterface';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '../../contexts/UserContext';
+import { login } from '../../services/UserAPI';
 import { showToast } from '../../helpers/ToastHelper';
-import { LOGIN,BACK_TO_LANDING } from '../../constants';
+import { LOGIN, BACK_TO_LANDING } from '../../constants';
+import { LoginData, APIResponse, User } from '../../interfaces/UserInterface';
 
-// This page allows users to log into their account.
+interface LoginFormData {
+  email: string;
+  password: string;
+}
+
 const Login = () => {
-  const [form, setForm] = useState<LoginData>({ email: '', password: '' });
   const { setUser } = useUserContext();
-  const [error,setError]=useState<string|null>(null)
+  const navigate = useNavigate();
 
-  const navigate=useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>();
 
-  //handles form input of login
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  //handles submit and sets token 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: LoginFormData) => {
+    // Data validation is handled by react-hook-form
     try {
-      const response:any= await login(form);
+      const response: any= await login(data);
       if (response.status==200) {
         setUser(response.user);
-        localStorage.setItem("token",response.token);
-        showToast("Login Successful","success");
+        localStorage.setItem("accessToken", response.accessToken);
+        localStorage.setItem("refreshToken", response.refreshToken);
+        showToast("Login Successful", "success");
         navigate("/");
       } else {
-        showToast("Login Failed","error");
+        showToast("Enter Correct Credentials", "error");
       }
     } catch (error) {
-      setError("Login Failed !!")
+      showToast("Login Failed !!", "error");
     }
   };
 
-  //handles navigation to dashboard
   const handleBack = () => {
     navigate("/");
   };
@@ -46,30 +47,22 @@ const Login = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
         <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">Login</h2>
-
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-
-        <form className="space-y-4" onSubmit={handleSubmit}>
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <input 
-            type='email' 
-            name='email' 
-            placeholder='Email' 
-            onChange={handleChange} 
-            required
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            type="email" 
+            placeholder="Email" 
+            {...register("email", { required: "Email is required" })} 
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
           />
-
+          {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
 
           <input
             type="password"
-            name="password"
             placeholder="Password"
-            value={form.password}
-            onChange={handleChange}
-            required
+            {...register("password", { required: "Password is required" })} 
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-
+          {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
 
           <button
             type="submit"

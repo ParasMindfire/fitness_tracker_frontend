@@ -4,14 +4,11 @@ import { useUserContext } from "../contexts/UserContext";
 import {  
   NAVBAR_TITLE,  
   WORKOUTS,  
-  FITNESS_GOALS_TITLE,  
-  STATS_TITLE,  
+  FITNESS_GOALS_TITLE,
   VIEW_WORKOUTS,  
   ADD_WORKOUT_TITLE,  
   VIEW_FITNESS_GOALS,  
-  ADD_FITNESS_GOAL_TITLE,  
-  CALORIE_STATS,  
-  DURATION_STATS,  
+  ADD_FITNESS_GOAL_TITLE, 
   LOGOUT_BUTTON,  
   LOGIN_BUTTON,  
   SIGNUP_BUTTON,
@@ -58,7 +55,8 @@ const Navbar: React.FC = () => {
   }, [user, workouts]);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
     setUser("");
     navigate("/login");
   };
@@ -111,27 +109,57 @@ const Navbar: React.FC = () => {
               </div>
 
               <div className="relative group">
-                <button className="text-white hover:bg-blue-500 px-4 py-2 rounded-lg">
-                  {STATS_TITLE}
-                </button>
-                <div className="absolute left-0 hidden bg-white text-black shadow-lg rounded-lg w-40 group-hover:block">
-                  <Link to="/calories" className="block px-4 py-2 hover:bg-gray-200">
-                    {CALORIE_STATS}
-                  </Link>
-                  <Link to="/durations" className="block px-4 py-2 hover:bg-gray-200">
-                    {DURATION_STATS}
-                  </Link>
-                </div>
-              </div>
+                  <button
+                    onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+                    className="text-white hover:bg-blue-500 px-4 py-2 rounded-lg"
+                  >
+                    Calendar
+                  </button>
+                    {isCalendarOpen && (
+                      <div
+                        className="absolute top-full mt-5 bg-white rounded-lg shadow-lg p-4 w-96 z-10"
+                        style={{ right: "-100px" }}
+                      >
+                        <button
+                          onClick={() => setIsCalendarOpen(false)}
+                          className="absolute top-2 right-2 text-red-500 font-bold"
+                        >
+                          X
+                        </button>
+                        <h2 className="text-xl font-bold text-center mb-4">Workout Calendar</h2>
+                        <div className="grid grid-cols-7 gap-2">
+                          {getCurrentMonthDays().map((day) => {
+                            const dateStr = day.toLocaleDateString("en-CA");
+                            const isWorkoutDay = workoutDates.some(
+                              (workout) => workout.workout_date === dateStr
+                            );
+                            const isFutureDate = day > new Date();
+                            const workoutCount = workoutDates.filter(
+                              (workout) => workout.workout_date === dateStr
+                            ).length;
 
-              <div className="relative group">
-                <button
-                  onClick={() => setIsCalendarOpen(true)}
-                  className="text-white hover:bg-blue-500 px-4 py-2 rounded-lg"
-                >
-                  Calendar
-                </button>
-              </div>
+                            return (
+                              <div
+                                key={dateStr}
+                                className={`w-10 h-10 flex items-center justify-center rounded-full 
+                                  ${isFutureDate
+                                    ? "bg-gray-400 text-white"
+                                    : workoutCount > 1
+                                      ? "bg-yellow-400 text-white"
+                                      : isWorkoutDay
+                                        ? "bg-green-400 text-white"
+                                        : "bg-red-400 text-white"}`}
+                              >
+                                {day.getDate()}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+</div>
+
+
 
               <div className="text-white px-4 py-2 rounded-lg bg-green-500">
                 Streak: {streak} days
@@ -166,54 +194,6 @@ const Navbar: React.FC = () => {
           )}
         </div>
       </div>
-
-      {isCalendarOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white rounded-lg p-6 w-96 relative">
-            <button
-              onClick={() => setIsCalendarOpen(false)}
-              className="absolute top-2 right-2 text-red-500"
-            >
-              X
-            </button>
-            <h2 className="text-xl font-bold text-center mb-4">Workout Calendar</h2>
-            <div className="grid grid-cols-7 gap-2">
-              {getCurrentMonthDays().map((day) => {
-                const dateStr = day.toLocaleDateString("en-CA");
-
-                // console.log("datestr ",dateStr);
-
-                const isWorkoutDay = workoutDates.some((workout) => workout.workout_date == dateStr
-              );
-
-              // console.log("isworkout ",isWorkoutDay);
-
-                const isFutureDate = day > new Date();
-
-                const workoutCount = workoutDates.filter(
-                  (workout) => workout.workout_date === dateStr
-                ).length;
-
-                return (
-                  <div
-                    key={dateStr}
-                    className={`w-10 h-10 flex items-center justify-center rounded-full 
-                      ${isFutureDate
-                        ? "bg-gray-400 text-white"
-                        : workoutCount > 1
-                          ? "bg-yellow-400 text-white" 
-                          : isWorkoutDay
-                            ? "bg-green-400 text-white"
-                            : "bg-red-400 text-white"}`}
-                  >
-                    {day.getDate()}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      )}
     </nav>
   );
 };

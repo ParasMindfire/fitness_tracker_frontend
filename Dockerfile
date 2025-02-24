@@ -1,4 +1,4 @@
-# Use Node.js 20 instead of 18
+# Use Node.js 20 Alpine
 FROM node:20-alpine
 
 # Set working directory
@@ -7,13 +7,13 @@ WORKDIR /app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install all dependencies (including devDependencies)
+RUN npm install 
 
-# Copy project files
+# Copy the rest of the project files
 COPY . .
 
-# Expose Vite dev server port
+# Expose Vite's default port
 EXPOSE 5173
 
 # Start Vite dev server

@@ -1,12 +1,13 @@
-import axios from 'axios';
 import { User, LoginData, APIResponse } from '../interfaces/UserInterface';
+import axiosInstance from "./AuthInterceptor"
 
 const API_URL = "http://localhost:3000";
 
 // Signs up a new user
-export const signup = async (data: User): Promise<APIResponse<User>> => {
+export const signup = async (data: Omit<User, 'user_id' | 'profile_pic'> ): Promise<APIResponse<User>> => {
   try {
-    const response = await axios.post<APIResponse<User>>(`${API_URL}/auth/signup`, data);
+    const response = await axiosInstance.post<APIResponse<User>>(`${API_URL}/auth/signup`, data);
+    console.log("resposne signup ",response);
     return response.data;
   } catch (error) {
     throw error;
@@ -16,7 +17,8 @@ export const signup = async (data: User): Promise<APIResponse<User>> => {
 // Logs in an existing user
 export const login = async (data: LoginData): Promise<APIResponse<User>> => {
   try {
-    const response = await axios.post<APIResponse<User>>(`${API_URL}/auth/login`, data);
+    const response = await axiosInstance.post<APIResponse<User>>(`${API_URL}/auth/login`, data);
+    console.log("resposne login ",response);
     return response.data;
   } catch (error) {
     console.error("Login error:", error);
@@ -28,7 +30,7 @@ export const login = async (data: LoginData): Promise<APIResponse<User>> => {
 // Fetch all users
 export const getAllUsers = async (): Promise<User[]> => {
   try {
-    const response = await axios.get<User[]>(`${API_URL}/all/users`);
+    const response = await axiosInstance.get<User[]>(`${API_URL}/all/users`);
     return response.data;
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -39,8 +41,8 @@ export const getAllUsers = async (): Promise<User[]> => {
 
 export const getSingleUSer = async (): Promise<User> => {
   try {
-    const token=localStorage.getItem("token");
-    const response = await axios.get<User[]>(`${API_URL}/single/users`,{
+    const token=localStorage.getItem("accessToken");
+    const response = await axiosInstance.get<User[]>(`${API_URL}/single/users`,{
       headers: { Authorization: `Bearer ${token}` },
     });
     // console.log("response aya ??",response);

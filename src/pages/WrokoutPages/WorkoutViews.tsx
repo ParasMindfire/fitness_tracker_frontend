@@ -57,7 +57,7 @@ const WorkoutViews: React.FC = () => {
 
   //handles delete cutton call and closing modal
   const confirmDelete = async() => {
-    const token:any=localStorage.getItem("token");
+    const token:any=localStorage.getItem("accessToken");
     if (workoutId){
           await deleteWorkout(token,workoutId);
           showToast("Workout Deleted Successfully", "success");

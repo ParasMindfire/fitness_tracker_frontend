@@ -27,6 +27,7 @@ export interface Workout {
     name:string,
     excercise_type:string,
     duration:number,
-    calories_burned:number
+    calories_burned:number,
+    workout_date:string
   }
   
